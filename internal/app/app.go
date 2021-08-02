@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/pkritiotis/go-clean/internal/app/common"
 	"github.com/pkritiotis/go-clean/internal/app/commands"
+	"github.com/pkritiotis/go-clean/internal/app/common"
 	"github.com/pkritiotis/go-clean/internal/app/queries"
 	"github.com/pkritiotis/go-clean/internal/app/services"
 )
@@ -27,7 +27,9 @@ type App struct {
 }
 
 // NewApp Bootstraps Application Layer dependencies
-func NewApp(up common.UUIDProvider, tp common.TimeProvider, cragRepo services.CragRepository) App {
+func NewApp(cragRepo services.CragRepository) App {
+	up := common.NewUUIDProvider()
+	tp := common.NewTimeProvider()
 	return App{
 		Queries: Queries{
 			GetAllCragsHandler: queries.NewGetAllCragsQueryHandler(cragRepo),
