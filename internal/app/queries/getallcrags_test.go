@@ -60,7 +60,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := GetAllCragsQueryHandler{
+			h := getAllCragsQueryHandler{
 				repo: tt.fields.repo,
 			}
 			got, err := h.Handle()
@@ -84,7 +84,7 @@ func TestNewGetAllCragsQueryHandler(t *testing.T) {
 			args: args{
 				repo: services.MockRepository{},
 			},
-			want: GetAllCragsQueryHandler{
+			want: getAllCragsQueryHandler{
 				repo: services.MockRepository{},
 			},
 		},

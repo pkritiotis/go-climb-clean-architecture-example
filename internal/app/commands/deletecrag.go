@@ -12,17 +12,21 @@ type DeleteCragCommand struct {
 }
 
 //DeleteCragCommandHandler Handler Struct with Dependencies
-type DeleteCragCommandHandler struct {
+type DeleteCragCommandHandler interface {
+	Handle(command DeleteCragCommand) error
+}
+
+type deleteCragCommandHandler struct {
 	repo services.CragRepository
 }
 
 //NewDeleteCragCommandHandler Handler constructor
 func NewDeleteCragCommandHandler(repo services.CragRepository) DeleteCragCommandHandler {
-	return DeleteCragCommandHandler{repo: repo}
+	return deleteCragCommandHandler{repo: repo}
 }
 
 //Handle Handlers the DeleteCragCommand request
-func (h DeleteCragCommandHandler) Handle(command DeleteCragCommand) error {
+func (h deleteCragCommandHandler) Handle(command DeleteCragCommand) error {
 	crag, err := h.repo.GetCrag(command.CragID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")

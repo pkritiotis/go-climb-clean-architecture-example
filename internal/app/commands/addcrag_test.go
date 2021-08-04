@@ -103,7 +103,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := AddCragCommandHandler{
+			h := addCragCommandHandler{
 				uuidProvider: tt.fields.uuidProvider,
 				timeProvider: tt.fields.timeProvider,
 				repo:         tt.fields.repo,
@@ -134,7 +134,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 				timeProvider: common.MockTimeProvider{},
 				repo:         services.MockRepository{},
 			},
-			want: AddCragCommandHandler{
+			want: addCragCommandHandler{
 				uuidProvider: common.MockUUIDProvider{},
 				timeProvider: common.MockTimeProvider{},
 				repo:         services.MockRepository{},

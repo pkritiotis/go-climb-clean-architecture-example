@@ -25,7 +25,7 @@ func TestNewUpdateCragCommandHandler(t *testing.T) {
 			args: args{
 				repo: services.MockRepository{},
 			},
-			want: UpdateCragCommandHandler{
+			want: updateCragCommandHandler{
 				repo: services.MockRepository{},
 			},
 		},
@@ -165,7 +165,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := UpdateCragCommandHandler{
+			h := updateCragCommandHandler{
 				repo: tt.fields.repo,
 			}
 			err := h.Handle(tt.args.command)

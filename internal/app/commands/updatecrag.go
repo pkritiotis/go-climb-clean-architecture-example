@@ -15,17 +15,21 @@ type UpdateCragCommand struct {
 }
 
 //UpdateCragCommandHandler Contains the dependencies of the handler
-type UpdateCragCommandHandler struct {
+type UpdateCragCommandHandler interface {
+	Handle(command UpdateCragCommand) error
+}
+
+type updateCragCommandHandler struct {
 	repo services.CragRepository
 }
 
 //NewUpdateCragCommandHandler Constructor
 func NewUpdateCragCommandHandler(repo services.CragRepository) UpdateCragCommandHandler {
-	return UpdateCragCommandHandler{repo: repo}
+	return updateCragCommandHandler{repo: repo}
 }
 
 //Handle Handles the update command
-func (h UpdateCragCommandHandler) Handle(command UpdateCragCommand) error {
+func (h updateCragCommandHandler) Handle(command UpdateCragCommand) error {
 	crag, err := h.repo.GetCrag(command.ID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")

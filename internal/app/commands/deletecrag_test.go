@@ -94,7 +94,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := DeleteCragCommandHandler{
+			h := deleteCragCommandHandler{
 				repo: tt.fields.repo,
 			}
 			err := h.Handle(tt.args.command)
@@ -117,7 +117,7 @@ func TestNewDeleteCragCommandHandler(t *testing.T) {
 			args: args{
 				repo: services.MockRepository{},
 			},
-			want: DeleteCragCommandHandler{
+			want: deleteCragCommandHandler{
 				repo: services.MockRepository{},
 			},
 		},

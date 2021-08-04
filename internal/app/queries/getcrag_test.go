@@ -89,7 +89,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := GetCragQueryHandler{
+			h := getCragQueryHandler{
 				repo: tt.fields.repo,
 			}
 			got, err := h.Handle(tt.args.query)
@@ -113,7 +113,7 @@ func TestNewGetCragQueryHandler(t *testing.T) {
 			args: args{
 				repo: services.MockRepository{},
 			},
-			want: GetCragQueryHandler{
+			want: getCragQueryHandler{
 				repo: services.MockRepository{},
 			},
 		},

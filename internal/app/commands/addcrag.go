@@ -14,7 +14,11 @@ type AddCragCommand struct {
 }
 
 //AddCragCommandHandler Struct that allows handling AddCragCommand
-type AddCragCommandHandler struct {
+type AddCragCommandHandler interface {
+	Handle(command AddCragCommand) error
+}
+
+type addCragCommandHandler struct {
 	uuidProvider common.UUIDProvider
 	timeProvider common.TimeProvider
 	repo         services.CragRepository
@@ -22,11 +26,11 @@ type AddCragCommandHandler struct {
 
 //NewAddCragCommandHandler Initializes an AddCommandHandler
 func NewAddCragCommandHandler(uuidProvider common.UUIDProvider, timeProvider common.TimeProvider, repo services.CragRepository) AddCragCommandHandler {
-	return AddCragCommandHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo}
+	return addCragCommandHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo}
 }
 
 //Handle Handles the AddCragCommand
-func (h AddCragCommandHandler) Handle(command AddCragCommand) error {
+func (h addCragCommandHandler) Handle(command AddCragCommand) error {
 	crag := domain.Crag{
 		ID:        h.uuidProvider.NewUUID(),
 		Name:      command.Name,

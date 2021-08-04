@@ -12,16 +12,20 @@ type GetCragQuery struct {
 }
 
 //GetCragQueryHandler Contains the dependencies of the Handler
-type GetCragQueryHandler struct {
+type GetCragQueryHandler interface {
+	Handle(query GetCragQuery) (*domain.Crag, error)
+}
+
+type getCragQueryHandler struct {
 	repo services.CragRepository
 }
 
 //NewGetCragQueryHandler Handler Constructor
 func NewGetCragQueryHandler(repo services.CragRepository) GetCragQueryHandler {
-	return GetCragQueryHandler{repo: repo}
+	return getCragQueryHandler{repo: repo}
 }
 
 //Handle Handlers the GetCragQuery query
-func (h GetCragQueryHandler) Handle(query GetCragQuery) (*domain.Crag, error) {
+func (h getCragQueryHandler) Handle(query GetCragQuery) (*domain.Crag, error) {
 	return h.repo.GetCrag(query.CragID)
 }
