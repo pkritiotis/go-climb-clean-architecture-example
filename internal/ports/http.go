@@ -10,12 +10,12 @@ import (
 
 //HTTPServer Represents the http server running for this service
 type HTTPServer struct {
-	app    *app.App
+	app    app.App
 	router *mux.Router
 }
 
 //NewHTTPServer HTTPServer constructor
-func NewHTTPServer(app *app.App) *HTTPServer {
+func NewHTTPServer(app app.App) *HTTPServer {
 	httpServer := &HTTPServer{app: app}
 	httpServer.router = mux.NewRouter()
 	httpServer.AddCragHTTPRoutes()

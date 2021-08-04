@@ -9,7 +9,7 @@ import (
 func main() {
 	r := repo.NewInMemory()
 	a := app.NewApp(r)
-	httpServer := ports.NewHTTPServer(&a)
+	httpServer := ports.NewHTTPServer(a)
 	httpServer.ListenAndServe(":8080")
 
 }

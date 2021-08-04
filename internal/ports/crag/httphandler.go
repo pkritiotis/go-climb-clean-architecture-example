@@ -13,11 +13,11 @@ import (
 
 //HTTPHandler Crag http request handler
 type HTTPHandler struct {
-	app *app.App
+	app app.App
 }
 
 //NewHTTPHandler Constructor
-func NewHTTPHandler(app *app.App) *HTTPHandler {
+func NewHTTPHandler(app app.App) *HTTPHandler {
 	return &HTTPHandler{app: app}
 }
 
@@ -49,7 +49,7 @@ func (c HTTPHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[getCragIDURLParam]
 	crag, err := c.app.Queries.GetCragHandler.Handle(queries.GetCragQuery{CragID: uuid.MustParse(cragID)})
-	if crag == nil {
+	if err == nil && crag == nil {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, "Not Found")
 		return
@@ -140,10 +140,10 @@ func (c HTTPHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
 
 	err := c.app.Commands.UpdateCragHandler.Handle(cragToUpdateCommand)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 }
 
 const deleteCragIDURLParam = "cragId"
@@ -157,7 +157,7 @@ func (c HTTPHandler) DeleteCrag(w http.ResponseWriter, r *http.Request) {
 	cragID := vars[deleteCragIDURLParam]
 	err := c.app.Commands.DeleteCragHandler.Handle(commands.DeleteCragCommand{CragID: uuid.MustParse(cragID)})
 	if err != nil {
-		w.WriteHeader(http.StatusConflict)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, err.Error())
 	}
 }
