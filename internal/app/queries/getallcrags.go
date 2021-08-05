@@ -7,6 +7,7 @@ import (
 	"github.com/pkritiotis/go-clean/internal/app/services"
 )
 
+// CragQueryResult is the return model of th GetAllCragsQueryHandler
 type CragQueryResult struct {
 	ID        uuid.UUID `json:"id"`
 	Name      string    `json:"name"`
