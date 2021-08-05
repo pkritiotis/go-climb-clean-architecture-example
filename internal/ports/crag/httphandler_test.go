@@ -4,6 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/pkritiotis/go-clean/internal/app"
@@ -11,9 +15,6 @@ import (
 	"github.com/pkritiotis/go-clean/internal/app/queries"
 	"github.com/pkritiotis/go-clean/internal/domain"
 	"github.com/stretchr/testify/assert"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 type MockAddCragHandler struct {
@@ -143,10 +144,10 @@ func TestHTTPHandler_DeleteCrag(t *testing.T) {
 }
 
 type MockGetCragsHandler struct {
-	Handler func() ([]domain.Crag, error)
+	Handler func() ([]queries.CragQueryResult, error)
 }
 
-func (m MockGetCragsHandler) Handle() ([]domain.Crag, error) {
+func (m MockGetCragsHandler) Handle() ([]queries.CragQueryResult, error) {
 	return m.Handler()
 }
 
@@ -160,8 +161,8 @@ func TestHTTPHandler_GetCrags(t *testing.T) {
 	}{
 		{
 			name: "should get crags successfully",
-			handler: MockGetCragsHandler{Handler: func() ([]domain.Crag, error) {
-				return []domain.Crag{{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}}, nil
+			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
+				return []queries.CragQueryResult{{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}}, nil
 			}},
 			Body:               "",
 			ResultBodyContains: "3e204a57-4449-4c74-8227-77934cf25322",
@@ -169,7 +170,7 @@ func TestHTTPHandler_GetCrags(t *testing.T) {
 		},
 		{
 			name: "should return ok with empty body",
-			handler: MockGetCragsHandler{Handler: func() ([]domain.Crag, error) {
+			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
 				return nil, nil
 			}},
 			Body:               "",
@@ -178,7 +179,7 @@ func TestHTTPHandler_GetCrags(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockGetCragsHandler{Handler: func() ([]domain.Crag, error) {
+			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
 				return nil, errors.New("error")
 			}},
 			Body:               "",

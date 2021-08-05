@@ -2,11 +2,12 @@ package queries
 
 import (
 	"errors"
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
@@ -18,7 +19,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   []domain.Crag
+		want   []CragQueryResult
 		err    error
 	}{
 		{
@@ -30,7 +31,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []domain.Crag{},
+			want: []CragQueryResult(nil),
 			err:  nil,
 		},
 		{
@@ -42,7 +43,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []domain.Crag{{ID: mockUUID}},
+			want: []CragQueryResult{{ID: mockUUID}},
 			err:  nil,
 		},
 		{
@@ -54,7 +55,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []domain.Crag{{ID: mockUUID}},
+			want: []CragQueryResult(nil),
 			err:  errors.New("get crags error"),
 		},
 	}
