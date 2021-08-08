@@ -1,4 +1,4 @@
-package crag
+package http
 
 import (
 	"bytes"
@@ -25,7 +25,7 @@ func (m MockAddCragHandler) Handle(command commands.AddCragCommand) error {
 	return m.Handler(command)
 }
 
-func TestHTTPHandler_AddCrag(t *testing.T) {
+func TestCragHandler_AddCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
 		handler            commands.AddCragCommandHandler
@@ -71,7 +71,7 @@ func TestHTTPHandler_AddCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewHTTPHandler(app.App{Commands: app.Commands{AddCragHandler: tt.handler}})
+			c := NewCragHandler(app.App{Commands: app.Commands{AddCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("POST", "", buf)
@@ -90,7 +90,7 @@ type MockDeleteCragHandler struct {
 func (m MockDeleteCragHandler) Handle(command commands.DeleteCragCommand) error {
 	return m.Handler(command)
 }
-func TestHTTPHandler_DeleteCrag(t *testing.T) {
+func TestCragHandler_DeleteCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
 		handler            commands.DeleteCragCommandHandler
@@ -128,7 +128,7 @@ func TestHTTPHandler_DeleteCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewHTTPHandler(app.App{Commands: app.Commands{DeleteCragHandler: tt.handler}})
+			c := NewCragHandler(app.App{Commands: app.Commands{DeleteCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			if tt.Body != nil {
 				_ = json.NewEncoder(buf).Encode(tt.Body)
@@ -151,7 +151,7 @@ func (m MockGetCragsHandler) Handle() ([]queries.CragQueryResult, error) {
 	return m.Handler()
 }
 
-func TestHTTPHandler_GetCrags(t *testing.T) {
+func TestCragHandler_GetCrags(t *testing.T) {
 	var tests = []struct {
 		name               string
 		handler            queries.GetAllCragsQueryHandler
@@ -189,7 +189,7 @@ func TestHTTPHandler_GetCrags(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewHTTPHandler(app.App{Queries: app.Queries{GetAllCragsHandler: tt.handler}})
+			c := NewCragHandler(app.App{Queries: app.Queries{GetAllCragsHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("GET", "", buf)
@@ -209,7 +209,7 @@ func (m MockGetCragHandler) Handle(query queries.GetCragQuery) (*domain.Crag, er
 	return m.Handler(query)
 }
 
-func TestHTTPHandler_GetCrag(t *testing.T) {
+func TestCragHandler_GetCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
 		handler            queries.GetCragQueryHandler
@@ -251,7 +251,7 @@ func TestHTTPHandler_GetCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewHTTPHandler(app.App{Queries: app.Queries{GetCragHandler: tt.handler}})
+			c := NewCragHandler(app.App{Queries: app.Queries{GetCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("PUT", "", buf)
@@ -272,7 +272,7 @@ func (m MockUpdateCragHandler) Handle(command commands.UpdateCragCommand) error 
 	return m.Handler(command)
 }
 
-func TestHTTPHandler_UpdateCrag(t *testing.T) {
+func TestCragHandler_UpdateCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
 		handler            commands.UpdateCragCommandHandler
@@ -339,7 +339,7 @@ func TestHTTPHandler_UpdateCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewHTTPHandler(app.App{Commands: app.Commands{UpdateCragHandler: tt.handler}})
+			c := NewCragHandler(app.App{Commands: app.Commands{UpdateCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("PUT", "", buf)

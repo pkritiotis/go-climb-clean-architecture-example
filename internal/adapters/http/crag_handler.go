@@ -1,4 +1,4 @@
-package crag
+package http
 
 import (
 	"encoding/json"
@@ -11,21 +11,21 @@ import (
 	"net/http"
 )
 
-//HTTPHandler Crag http request handler
-type HTTPHandler struct {
+//CragsHandler Crag http request handler
+type CragsHandler struct {
 	app app.App
 }
 
-//NewHTTPHandler Constructor
-func NewHTTPHandler(app app.App) *HTTPHandler {
-	return &HTTPHandler{app: app}
+//NewCragHandler Constructor
+func NewCragHandler(app app.App) *CragsHandler {
+	return &CragsHandler{app: app}
 }
 
 //GetAllCragsRoutePath Path of the Get all crags request
 const GetAllCragsRoutePath = "/crag"
 
 //GetAllCrags Returns all available crags
-func (c HTTPHandler) GetAllCrags(w http.ResponseWriter, _ *http.Request) {
+func (c CragsHandler) GetAllCrags(w http.ResponseWriter, _ *http.Request) {
 	crags, err := c.app.Queries.GetAllCragsHandler.Handle()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -45,7 +45,7 @@ const getCragIDURLParam = "cragId"
 const GetCragRoutePath = "/crag/{" + getCragIDURLParam + "}"
 
 //GetCrag Returns the crag with the provided id
-func (c HTTPHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
+func (c CragsHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[getCragIDURLParam]
 	crag, err := c.app.Queries.GetCragHandler.Handle(queries.GetCragQuery{CragID: uuid.MustParse(cragID)})
@@ -79,7 +79,7 @@ type AddCragRequestModel struct {
 }
 
 //AddCrag Adds the provides crag
-func (c HTTPHandler) AddCrag(w http.ResponseWriter, r *http.Request) {
+func (c CragsHandler) AddCrag(w http.ResponseWriter, r *http.Request) {
 	var cragToAdd AddCragRequestModel
 	decodeErr := json.NewDecoder(r.Body).Decode(&cragToAdd)
 	if decodeErr != nil {
@@ -114,7 +114,7 @@ type UpdateCragRequestModel struct {
 }
 
 //UpdateCrag Updates path with the provided data
-func (c HTTPHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
+func (c CragsHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := uuid.MustParse(vars[updateCragIDURLParam])
 
@@ -152,7 +152,7 @@ const deleteCragIDURLParam = "cragId"
 const DeleteCragIDRoutePath = "/crag/{" + deleteCragIDURLParam + "}"
 
 //DeleteCrag Deletes the crag with the provided id
-func (c HTTPHandler) DeleteCrag(w http.ResponseWriter, r *http.Request) {
+func (c CragsHandler) DeleteCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[deleteCragIDURLParam]
 	err := c.app.Commands.DeleteCragHandler.Handle(commands.DeleteCragCommand{CragID: uuid.MustParse(cragID)})
