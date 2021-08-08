@@ -2,8 +2,8 @@ package commands
 
 import (
 	"github.com/pkritiotis/go-clean/internal/app/common"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 )
 
 //AddCragCommand Model of AddCragCommandHandler
@@ -38,6 +38,6 @@ func (h addCragCommandHandler) Handle(command AddCragCommand) error {
 		Country:   command.Country,
 		CreatedAt: h.timeProvider.Now(),
 	}
-	return h.repo.AddCrag(crag)
+	return h.repo.Add(crag)
 
 }

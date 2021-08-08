@@ -3,8 +3,8 @@ package repo
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 )
 
 //inMemoryRepo Implements the Repository Interface to provide an in-memory storage provider
@@ -19,7 +19,7 @@ func NewInMemory() services.CragRepository {
 }
 
 //GetCrag Returns the crag with the provided id
-func (m inMemoryRepo) GetCrag(id uuid.UUID) (*domain.Crag, error) {
+func (m inMemoryRepo) GetByID(id uuid.UUID) (*domain.Crag, error) {
 	crag, ok := m.crags[id.String()]
 	if !ok {
 		return nil, nil
@@ -28,7 +28,7 @@ func (m inMemoryRepo) GetCrag(id uuid.UUID) (*domain.Crag, error) {
 }
 
 //GetCrags Returns all stored crags
-func (m inMemoryRepo) GetCrags() ([]domain.Crag, error) {
+func (m inMemoryRepo) GetAll() ([]domain.Crag, error) {
 	keys := make([]string, 0)
 
 	for key := range m.crags {
@@ -43,19 +43,19 @@ func (m inMemoryRepo) GetCrags() ([]domain.Crag, error) {
 }
 
 //AddCrag Adds the provided crag
-func (m inMemoryRepo) AddCrag(crag domain.Crag) error {
+func (m inMemoryRepo) Add(crag domain.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
 //UpdateCrag Updates the provided crag
-func (m inMemoryRepo) UpdateCrag(crag domain.Crag) error {
+func (m inMemoryRepo) Update(crag domain.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
 //DeleteCrag Deletes the crag with the provided id
-func (m inMemoryRepo) DeleteCrag(id uuid.UUID) error {
+func (m inMemoryRepo) Delete(id uuid.UUID) error {
 	_, exists := m.crags[id.String()]
 	if !exists {
 		return fmt.Errorf("id %v not found", id.String())

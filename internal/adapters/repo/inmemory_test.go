@@ -2,8 +2,8 @@ package repo
 
 import (
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	services2 "github.com/pkritiotis/go-clean/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -11,7 +11,7 @@ import (
 func TestNewInMemory(t *testing.T) {
 	tests := []struct {
 		name string
-		want services.CragRepository
+		want services2.CragRepository
 	}{
 		{
 			name: "Should create an inmemory repo",
@@ -59,9 +59,9 @@ func Test_inMemoryRepo_AddCrag(t *testing.T) {
 			m := inMemoryRepo{
 				crags: tt.fields.crags,
 			}
-			err := m.AddCrag(tt.args.crag)
+			err := m.Add(tt.args.crag)
 			assert.Equal(t, tt.wantErr, err != nil)
-			c, _ := m.GetCrag(mockUUID)
+			c, _ := m.GetByID(mockUUID)
 			assert.Equal(t, *c, tt.args.crag)
 		})
 	}
@@ -108,7 +108,7 @@ func Test_inMemoryRepo_DeleteCrag(t *testing.T) {
 			m := inMemoryRepo{
 				crags: tt.fields.crags,
 			}
-			err := m.DeleteCrag(tt.args.id)
+			err := m.Delete(tt.args.id)
 			assert.Equal(t, tt.wantErr, err != nil)
 		})
 	}
@@ -162,7 +162,7 @@ func Test_inMemoryRepo_GetCrag(t *testing.T) {
 			m := inMemoryRepo{
 				crags: tt.fields.crags,
 			}
-			got, err := m.GetCrag(tt.args.id)
+			got, err := m.GetByID(tt.args.id)
 			assert.Equal(t, tt.wantErr, err != nil)
 			assert.Equal(t, tt.want, got)
 		})
@@ -209,7 +209,7 @@ func Test_inMemoryRepo_GetCrags(t *testing.T) {
 			m := inMemoryRepo{
 				crags: tt.fields.crags,
 			}
-			got, err := m.GetCrags()
+			got, err := m.GetAll()
 			assert.Equal(t, tt.wantErr, err != nil)
 			assert.Equal(t, tt.want, got)
 		})
@@ -261,10 +261,10 @@ func Test_inMemoryRepo_UpdateCrag(t *testing.T) {
 			m := inMemoryRepo{
 				crags: tt.fields.crags,
 			}
-			err := m.UpdateCrag(tt.args.crag)
+			err := m.Update(tt.args.crag)
 			assert.Equal(t, tt.wantErr, err != nil)
 			if err != nil {
-				c, _ := m.GetCrag(mockUUID)
+				c, _ := m.GetByID(mockUUID)
 				assert.Equal(t, tt.args.crag.Name, c.Name)
 			}
 		})

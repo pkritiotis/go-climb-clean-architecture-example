@@ -21,7 +21,7 @@ func NewCragHandler(app app.App) *CragsHandler {
 	return &CragsHandler{app: app}
 }
 
-//GetAllCragsRoutePath Path of the Get all crags request
+//GetAllCragsRoutePath Path of the GetByID all crags request
 const GetAllCragsRoutePath = "/crag"
 
 //GetAllCrags Returns all available crags
@@ -41,7 +41,7 @@ func (c CragsHandler) GetAllCrags(w http.ResponseWriter, _ *http.Request) {
 
 const getCragIDURLParam = "cragId"
 
-//GetCragRoutePath Get Crag path
+//GetCragRoutePath GetByID Crag path
 const GetCragRoutePath = "/crag/{" + getCragIDURLParam + "}"
 
 //GetCrag Returns the crag with the provided id
@@ -71,7 +71,7 @@ func (c CragsHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
 //AddCragRoutePath Add Crag path
 const AddCragRoutePath = "/crag"
 
-//AddCragRequestModel represents the request model expected for AddCrag request
+//AddCragRequestModel represents the request model expected for Add request
 type AddCragRequestModel struct {
 	Name    string `json:"name"`
 	Desc    string `json:"desc"`
@@ -105,7 +105,7 @@ const updateCragIDURLParam = "cragId"
 //UpdateCragRoutePath Update path
 const UpdateCragRoutePath = "/crag/{" + updateCragIDURLParam + "}"
 
-//UpdateCragRequestModel represents the  request model of UpdateCrag
+//UpdateCragRequestModel represents the  request model of Update
 type UpdateCragRequestModel struct {
 	ID      uuid.UUID `json:"id"`
 	Name    string    `json:"name"`

@@ -2,8 +2,8 @@ package queries
 
 import (
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 )
 
 //GetCragQuery Model of the Handler
@@ -27,5 +27,5 @@ func NewGetCragQueryHandler(repo services.CragRepository) GetCragQueryHandler {
 
 //Handle Handlers the GetCragQuery query
 func (h getCragQueryHandler) Handle(query GetCragQuery) (*domain.Crag, error) {
-	return h.repo.GetCrag(query.CragID)
+	return h.repo.GetByID(query.CragID)
 }

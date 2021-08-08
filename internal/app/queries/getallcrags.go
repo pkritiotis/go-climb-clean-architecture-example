@@ -1,10 +1,10 @@
 package queries
 
 import (
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 )
 
 // CragQueryResult is the return model of th GetAllCragsQueryHandler
@@ -33,7 +33,7 @@ func NewGetAllCragsQueryHandler(repo services.CragRepository) GetAllCragsQueryHa
 //Handle Handles the query
 func (h getAllCragsQueryHandler) Handle() ([]CragQueryResult, error) {
 
-	res, err := h.repo.GetCrags()
+	res, err := h.repo.GetAll()
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import (
 	"github.com/pkritiotis/go-clean/internal/app/commands"
 	"github.com/pkritiotis/go-clean/internal/app/common"
 	"github.com/pkritiotis/go-clean/internal/app/queries"
-	"github.com/pkritiotis/go-clean/internal/app/services"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

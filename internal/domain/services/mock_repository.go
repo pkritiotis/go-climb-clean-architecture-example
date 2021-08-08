@@ -11,32 +11,32 @@ type MockRepository struct {
 	mock.Mock
 }
 
-// GetCrag mock
-func (m MockRepository) GetCrag(id uuid.UUID) (*domain.Crag, error) {
+// GetByID mock
+func (m MockRepository) GetByID(id uuid.UUID) (*domain.Crag, error) {
 	args := m.Called(id)
 	return args.Get(0).(*domain.Crag), args.Error(1)
 }
 
-//GetCrags mock
-func (m MockRepository) GetCrags() ([]domain.Crag, error) {
+// GetAll mock
+func (m MockRepository) GetAll() ([]domain.Crag, error) {
 	args := m.Called()
 	return args.Get(0).([]domain.Crag), args.Error(1)
 }
 
-// AddCrag mock
-func (m MockRepository) AddCrag(crag domain.Crag) error {
+// Add mock
+func (m MockRepository) Add(crag domain.Crag) error {
 	args := m.Called(crag)
 	return args.Error(0)
 }
 
-// UpdateCrag mock
-func (m MockRepository) UpdateCrag(crag domain.Crag) error {
+// Update mock
+func (m MockRepository) Update(crag domain.Crag) error {
 	args := m.Called(crag)
 	return args.Error(0)
 }
 
-// DeleteCrag mock
-func (m MockRepository) DeleteCrag(id uuid.UUID) error {
+// Delete mock
+func (m MockRepository) Delete(id uuid.UUID) error {
 	args := m.Called(id)
 	return args.Error(0)
 }

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-clean/internal/app/common"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -51,7 +51,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 						CreatedAt: mockTime,
 					}
 					mp := services.MockRepository{}
-					mp.On("AddCrag", acc).Return(nil)
+					mp.On("Add", acc).Return(nil)
 					return mp
 				}(),
 			},
@@ -87,7 +87,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 						CreatedAt: mockTime,
 					}
 					mp := services.MockRepository{}
-					mp.On("AddCrag", acc).Return(errors.New("test"))
+					mp.On("Add", acc).Return(errors.New("test"))
 					return mp
 				}(),
 			},

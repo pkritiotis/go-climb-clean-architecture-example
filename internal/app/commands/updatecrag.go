@@ -3,10 +3,10 @@ package commands
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 )
 
-//UpdateCragCommand UpdateCrag Model
+//UpdateCragCommand Update Model
 type UpdateCragCommand struct {
 	ID      uuid.UUID
 	Name    string
@@ -30,7 +30,7 @@ func NewUpdateCragCommandHandler(repo services.CragRepository) UpdateCragCommand
 
 //Handle Handles the update command
 func (h updateCragCommandHandler) Handle(command UpdateCragCommand) error {
-	crag, err := h.repo.GetCrag(command.ID)
+	crag, err := h.repo.GetByID(command.ID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")
 	}
@@ -42,6 +42,6 @@ func (h updateCragCommandHandler) Handle(command UpdateCragCommand) error {
 	crag.Desc = command.Desc
 	crag.Country = command.Country
 
-	return h.repo.UpdateCrag(*crag)
+	return h.repo.Update(*crag)
 
 }

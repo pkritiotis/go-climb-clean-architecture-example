@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -72,8 +72,8 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 						Country:   "updated",
 						CreatedAt: time.Time{},
 					}
-					mp.On("GetCrag", mockUUID).Return(&returnedCrag, nil)
-					mp.On("UpdateCrag", updatedCrag).Return(nil)
+					mp.On("GetByID", mockUUID).Return(&returnedCrag, nil)
+					mp.On("Update", updatedCrag).Return(nil)
 
 					return mp
 				}(),
@@ -93,7 +93,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrag", mockUUID).Return(&domain.Crag{ID: mockUUID}, errors.New("get error"))
+					mp.On("GetByID", mockUUID).Return(&domain.Crag{ID: mockUUID}, errors.New("get error"))
 
 					return mp
 				}(),
@@ -113,7 +113,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrag", mockUUID).Return((*domain.Crag)(nil), nil)
+					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), nil)
 					return mp
 				}(),
 			},
@@ -146,8 +146,8 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 						Country:   "updated",
 						CreatedAt: time.Time{},
 					}
-					mp.On("GetCrag", mockUUID).Return(&returnedCrag, nil)
-					mp.On("UpdateCrag", updatedCrag).Return(errors.New("update error"))
+					mp.On("GetByID", mockUUID).Return(&returnedCrag, nil)
+					mp.On("Update", updatedCrag).Return(errors.New("update error"))
 
 					return mp
 				}(),

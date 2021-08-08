@@ -2,10 +2,10 @@ package queries
 
 import (
 	"errors"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
 	"github.com/stretchr/testify/assert"
 )
@@ -27,7 +27,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrags").Return([]domain.Crag{}, nil)
+					mp.On("GetAll").Return([]domain.Crag{}, nil)
 					return mp
 				}(),
 			},
@@ -39,7 +39,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrags").Return([]domain.Crag{{ID: mockUUID}}, nil)
+					mp.On("GetAll").Return([]domain.Crag{{ID: mockUUID}}, nil)
 					return mp
 				}(),
 			},
@@ -51,7 +51,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrags").Return([]domain.Crag{{ID: mockUUID}}, errors.New("get crags error"))
+					mp.On("GetAll").Return([]domain.Crag{{ID: mockUUID}}, errors.New("get crags error"))
 					return mp
 				}(),
 			},

@@ -3,8 +3,8 @@ package queries
 import (
 	"errors"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
 	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -37,7 +37,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrag", mockUUID).Return(mockCrag, nil)
+					mp.On("GetByID", mockUUID).Return(mockCrag, nil)
 
 					return mp
 				}(),
@@ -55,7 +55,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrag", mockUUID).Return((*domain.Crag)(nil), nil)
+					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), nil)
 
 					return mp
 				}(),
@@ -73,7 +73,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 			fields: fields{
 				repo: func() services.MockRepository {
 					mp := services.MockRepository{}
-					mp.On("GetCrag", mockUUID).Return((*domain.Crag)(nil), errors.New("get error"))
+					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), errors.New("get error"))
 
 					return mp
 				}(),

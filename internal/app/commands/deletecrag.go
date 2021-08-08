@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/services"
+	"github.com/pkritiotis/go-clean/internal/domain/services"
 )
 
 //DeleteCragCommand Command Model
@@ -27,13 +27,13 @@ func NewDeleteCragCommandHandler(repo services.CragRepository) DeleteCragCommand
 
 //Handle Handlers the DeleteCragCommand request
 func (h deleteCragCommandHandler) Handle(command DeleteCragCommand) error {
-	crag, err := h.repo.GetCrag(command.CragID)
+	crag, err := h.repo.GetByID(command.CragID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")
 	}
 	if err != nil {
 		return err
 	}
-	return h.repo.DeleteCrag(command.CragID)
+	return h.repo.Delete(command.CragID)
 
 }

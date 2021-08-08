@@ -7,9 +7,9 @@ import (
 
 //CragRepository Repository Interface for crags
 type CragRepository interface {
-	GetCrag(id uuid.UUID) (*domain.Crag, error)
-	GetCrags() ([]domain.Crag, error)
-	AddCrag(crag domain.Crag) error
-	UpdateCrag(crag domain.Crag) error
-	DeleteCrag(id uuid.UUID) error
+	GetByID(id uuid.UUID) (*domain.Crag, error)
+	GetAll() ([]domain.Crag, error)
+	Add(crag domain.Crag) error
+	Update(crag domain.Crag) error
+	Delete(id uuid.UUID) error
 }
