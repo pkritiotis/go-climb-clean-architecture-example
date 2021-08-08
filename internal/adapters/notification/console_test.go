@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestConsoleManager_Notify(t *testing.T) {
+func TestConsoleNotificationService_Notify(t *testing.T) {
 	type args struct {
 		notification services.Notification
 	}
@@ -28,7 +28,7 @@ func TestConsoleManager_Notify(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			co := ConsoleManager{}
+			co := ConsoleNotificationService{}
 			err := co.Notify(tt.args.notification)
 			assert.Equal(t, tt.wantErr, err != nil)
 		})

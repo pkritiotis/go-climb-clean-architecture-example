@@ -6,11 +6,11 @@ import (
 	"github.com/pkritiotis/go-clean/internal/app/services"
 )
 
-// ConsoleManager provides a console implementation of the NotificationManager
-type ConsoleManager struct{}
+// ConsoleNotificationService provides a console implementation of the NotificationService
+type ConsoleNotificationService struct{}
 
 // Notify prints out the notifications in console
-func (ConsoleManager) Notify(notification services.Notification) error {
+func (ConsoleNotificationService) Notify(notification services.Notification) error {
 	jsonNotification, err := json.Marshal(notification)
 	if err != nil {
 		return err
