@@ -1,7 +1,7 @@
 package queries
 
 import (
-	"github.com/pkritiotis/go-clean/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/services"
 	"time"
 
 	"github.com/google/uuid"

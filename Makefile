@@ -19,7 +19,7 @@ test-int: ## Run all tests
 	go test -mod=vendor `go list ./... | grep -v 'docs'` -race -tags=integration
 
 build: ## Build the app executable for Linux
-	CGO_ENABLED=0 GOOS=linux GO111MODULE=on go build -mod=vendor -a -installsuffix cgo -o ./go-clean ./cmd/main.go
+	CGO_ENABLED=0 GOOS=linux GO111MODULE=on go build -mod=vendor -a -installsuffix cgo -o ./go-climb ./cmd/main.go
 
 fmt: ## Format the source code
 	go fmt ./...

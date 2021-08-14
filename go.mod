@@ -1,4 +1,4 @@
-module github.com/pkritiotis/go-clean
+module github.com/pkritiotis/go-climb
 
 go 1.16
 

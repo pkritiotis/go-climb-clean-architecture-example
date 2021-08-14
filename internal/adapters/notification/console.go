@@ -3,7 +3,7 @@ package notification
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkritiotis/go-clean/internal/app/services"
+	"github.com/pkritiotis/go-climb/internal/app/services"
 )
 
 // ConsoleNotificationService provides a console implementation of the NotificationService

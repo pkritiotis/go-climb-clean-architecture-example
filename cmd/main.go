@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/pkritiotis/go-clean/internal/adapters/http"
-	"github.com/pkritiotis/go-clean/internal/adapters/repo"
-	"github.com/pkritiotis/go-clean/internal/app"
+	"github.com/pkritiotis/go-climb/internal/adapters/http"
+	"github.com/pkritiotis/go-climb/internal/adapters/repo"
+	"github.com/pkritiotis/go-climb/internal/app"
 )
 
 func main() {

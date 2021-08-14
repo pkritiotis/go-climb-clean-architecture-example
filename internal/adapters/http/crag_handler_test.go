@@ -10,10 +10,10 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/pkritiotis/go-clean/internal/app"
-	"github.com/pkritiotis/go-clean/internal/app/commands"
-	"github.com/pkritiotis/go-clean/internal/app/queries"
-	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-climb/internal/app"
+	"github.com/pkritiotis/go-climb/internal/app/commands"
+	"github.com/pkritiotis/go-climb/internal/app/queries"
+	"github.com/pkritiotis/go-climb/internal/domain"
 	"github.com/stretchr/testify/assert"
 )
 

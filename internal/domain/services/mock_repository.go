@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/domain"
+	"github.com/pkritiotis/go-climb/internal/domain"
 	"github.com/stretchr/testify/mock"
 )
 

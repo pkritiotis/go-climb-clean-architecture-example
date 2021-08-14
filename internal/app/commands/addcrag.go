@@ -1,9 +1,9 @@
 package commands
 
 import (
-	"github.com/pkritiotis/go-clean/internal/app/common"
-	"github.com/pkritiotis/go-clean/internal/domain"
-	"github.com/pkritiotis/go-clean/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/app/common"
+	"github.com/pkritiotis/go-climb/internal/domain"
+	"github.com/pkritiotis/go-climb/internal/domain/services"
 )
 
 //AddCragCommand Model of AddCragCommandHandler

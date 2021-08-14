@@ -1,7 +1,7 @@
 package notification
 
 import (
-	"github.com/pkritiotis/go-clean/internal/app/services"
+	"github.com/pkritiotis/go-climb/internal/app/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -3,9 +3,9 @@ package commands
 import (
 	"errors"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/app/common"
-	"github.com/pkritiotis/go-clean/internal/domain"
-	"github.com/pkritiotis/go-clean/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/app/common"
+	"github.com/pkritiotis/go-climb/internal/domain"
+	"github.com/pkritiotis/go-climb/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

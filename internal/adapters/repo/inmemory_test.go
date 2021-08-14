@@ -2,8 +2,8 @@ package repo
 
 import (
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-clean/internal/domain"
-	services2 "github.com/pkritiotis/go-clean/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain"
+	services2 "github.com/pkritiotis/go-climb/internal/domain/services"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
