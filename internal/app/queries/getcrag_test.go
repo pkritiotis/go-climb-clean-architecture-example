@@ -19,6 +19,14 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		Country:   "test",
 		CreatedAt: time.Time{},
 	}
+
+	cragQueryResult := &CragQueryResult{
+		ID:        mockUUID,
+		Name:      mockCrag.Name,
+		Desc:      mockCrag.Desc,
+		Country:   mockCrag.Country,
+		CreatedAt: mockCrag.CreatedAt,
+	}
 	type fields struct {
 		repo services.CragRepository
 	}
@@ -29,7 +37,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *domain.Crag
+		want   *CragQueryResult
 		err    error
 	}{
 		{
@@ -47,7 +55,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 					CragID: mockUUID,
 				},
 			},
-			want: mockCrag,
+			want: cragQueryResult,
 			err:  nil,
 		},
 		{
@@ -65,7 +73,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 					CragID: mockUUID,
 				},
 			},
-			want: (*domain.Crag)(nil),
+			want: (*CragQueryResult)(nil),
 			err:  nil,
 		},
 		{
@@ -83,7 +91,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 					CragID: mockUUID,
 				},
 			},
-			want: (*domain.Crag)(nil),
+			want: (*CragQueryResult)(nil),
 			err:  errors.New("get error"),
 		},
 	}

@@ -2,19 +2,7 @@ package queries
 
 import (
 	"github.com/pkritiotis/go-climb/internal/domain/services"
-	"time"
-
-	"github.com/google/uuid"
 )
-
-// CragQueryResult is the return model of th GetAllCragsQueryHandler
-type CragQueryResult struct {
-	ID        uuid.UUID `json:"id"`
-	Name      string    `json:"name"`
-	Desc      string    `json:"desc"`
-	Country   string    `json:"country"`
-	CreatedAt time.Time `json:"created_at"`
-}
 
 //GetAllCragsQueryHandler Contains the dependencies of the Handler
 type GetAllCragsQueryHandler interface {

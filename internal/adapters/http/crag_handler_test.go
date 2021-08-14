@@ -13,7 +13,6 @@ import (
 	"github.com/pkritiotis/go-climb/internal/app"
 	"github.com/pkritiotis/go-climb/internal/app/commands"
 	"github.com/pkritiotis/go-climb/internal/app/queries"
-	"github.com/pkritiotis/go-climb/internal/domain"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -202,10 +201,10 @@ func TestCragHandler_GetCrags(t *testing.T) {
 }
 
 type MockGetCragHandler struct {
-	Handler func(query queries.GetCragQuery) (*domain.Crag, error)
+	Handler func(query queries.GetCragQuery) (*queries.CragQueryResult, error)
 }
 
-func (m MockGetCragHandler) Handle(query queries.GetCragQuery) (*domain.Crag, error) {
+func (m MockGetCragHandler) Handle(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
 	return m.Handler(query)
 }
 
@@ -220,8 +219,8 @@ func TestCragHandler_GetCrag(t *testing.T) {
 	}{
 		{
 			name: "should get crag successfully",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*domain.Crag, error) {
-				return &domain.Crag{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}, nil
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
+				return &queries.CragQueryResult{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
 			Body:               "",
@@ -230,7 +229,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return not found",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*domain.Crag, error) {
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
 				return nil, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
@@ -240,7 +239,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*domain.Crag, error) {
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
 				return nil, errors.New("error")
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
