@@ -1,16 +1,20 @@
 package main
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/infra/http"
-	"github.com/pkritiotis/go-climb/internal/infra/notification"
-	"github.com/pkritiotis/go-climb/internal/infra/repo"
+	"github.com/pkritiotis/go-climb/internal/crag"
+	"github.com/pkritiotis/go-climb/internal/http"
+	"github.com/pkritiotis/go-climb/internal/notification"
+	"github.com/pkritiotis/go-climb/internal/storage"
+	"github.com/pkritiotis/go-climb/internal/timeutil"
+	"github.com/pkritiotis/go-climb/internal/uuidutil"
 )
 
 func main() {
-	r := repo.NewInMemory()
+	r := storage.NewInMemory()
 	ns := notification.ConsoleNotificationService{}
-	a := app.NewApp(r, ns)
-	httpServer := http.NewServer(a)
+	up := uuidutil.NewUUIDProvider()
+	tp := timeutil.NewTimeProvider()
+	useCases := crag.NewUseCases(r, ns, up, tp)
+	httpServer := http.NewServer(useCases)
 	httpServer.ListenAndServe(":8080")
 }
