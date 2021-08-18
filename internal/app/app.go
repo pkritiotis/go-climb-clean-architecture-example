@@ -4,6 +4,7 @@ import (
 	"github.com/pkritiotis/go-climb/internal/app/commands"
 	"github.com/pkritiotis/go-climb/internal/app/common"
 	"github.com/pkritiotis/go-climb/internal/app/queries"
+	services2 "github.com/pkritiotis/go-climb/internal/app/services"
 	"github.com/pkritiotis/go-climb/internal/domain/services"
 )
 
@@ -27,7 +28,7 @@ type App struct {
 }
 
 // NewApp Bootstraps Application Layer dependencies
-func NewApp(cragRepo services.CragRepository) App {
+func NewApp(cragRepo services.CragRepository, ns services2.NotificationService) App {
 	up := common.NewUUIDProvider()
 	tp := common.NewTimeProvider()
 	return App{
@@ -36,7 +37,7 @@ func NewApp(cragRepo services.CragRepository) App {
 			GetCragHandler:     queries.NewGetCragQueryHandler(cragRepo),
 		},
 		Commands: Commands{
-			AddCragHandler:    commands.NewAddCragCommandHandler(up, tp, cragRepo),
+			AddCragHandler:    commands.NewAddCragCommandHandler(up, tp, cragRepo, ns),
 			UpdateCragHandler: commands.NewUpdateCragCommandHandler(cragRepo),
 			DeleteCragHandler: commands.NewDeleteCragCommandHandler(cragRepo),
 		},

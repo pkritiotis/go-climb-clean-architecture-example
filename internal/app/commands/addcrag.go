@@ -2,6 +2,7 @@ package commands
 
 import (
 	"github.com/pkritiotis/go-climb/internal/app/common"
+	appService "github.com/pkritiotis/go-climb/internal/app/services"
 	"github.com/pkritiotis/go-climb/internal/domain"
 	"github.com/pkritiotis/go-climb/internal/domain/services"
 )
@@ -19,14 +20,15 @@ type AddCragCommandHandler interface {
 }
 
 type addCragCommandHandler struct {
-	uuidProvider common.UUIDProvider
-	timeProvider common.TimeProvider
-	repo         services.CragRepository
+	uuidProvider        common.UUIDProvider
+	timeProvider        common.TimeProvider
+	repo                services.CragRepository
+	notificationService appService.NotificationService
 }
 
 //NewAddCragCommandHandler Initializes an AddCommandHandler
-func NewAddCragCommandHandler(uuidProvider common.UUIDProvider, timeProvider common.TimeProvider, repo services.CragRepository) AddCragCommandHandler {
-	return addCragCommandHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo}
+func NewAddCragCommandHandler(uuidProvider common.UUIDProvider, timeProvider common.TimeProvider, repo services.CragRepository, notificationService appService.NotificationService) AddCragCommandHandler {
+	return addCragCommandHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo, notificationService: notificationService}
 }
 
 //Handle Handles the AddCragCommand
@@ -38,6 +40,13 @@ func (h addCragCommandHandler) Handle(command AddCragCommand) error {
 		Country:   command.Country,
 		CreatedAt: h.timeProvider.Now(),
 	}
-	return h.repo.Add(crag)
-
+	err := h.repo.Add(crag)
+	if err != nil {
+		return err
+	}
+	n := appService.Notification{
+		Subject: "New crag added",
+		Message: "A new crag with name '" + crag.Name + "' was added in the repository",
+	}
+	return h.notificationService.Notify(n)
 }
