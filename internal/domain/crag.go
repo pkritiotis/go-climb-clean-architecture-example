@@ -7,9 +7,9 @@ import (
 
 //Crag Model that represents the Crag
 type Crag struct {
-	ID        uuid.UUID `json:"id"`
-	Name      string    `json:"name"`
-	Desc      string    `json:"desc"`
-	Country   string    `json:"country"`
-	CreatedAt time.Time `json:"created_at"`
+	ID        uuid.UUID
+	Name      string
+	Desc      string
+	Country   string
+	CreatedAt time.Time
 }

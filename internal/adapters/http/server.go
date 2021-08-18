@@ -23,16 +23,16 @@ func NewServer(app app.App) *Server {
 	return &Server{app: app}
 }
 
-//AddCragHTTPRoutes Adds all available Routes to the router
 func (httpServer *Server) AddCragHTTPRoutes() {
+	const cragsHTTPRoutePath = "/crags"
 	//Queries
-	httpServer.router.HandleFunc(GetAllCragsRoutePath, NewCragHandler(httpServer.app).GetAllCrags).Methods("GET")
-	httpServer.router.HandleFunc(GetCragRoutePath, NewCragHandler(httpServer.app).GetCrag).Methods("GET")
+	httpServer.router.HandleFunc(cragsHTTPRoutePath, NewCragHandler(httpServer.app).GetAllCrags).Methods("GET")
+	httpServer.router.HandleFunc(cragsHTTPRoutePath+"/{"+getCragIDURLParam+"}", NewCragHandler(httpServer.app).GetCrag).Methods("GET")
 
 	//Commands
-	httpServer.router.HandleFunc(AddCragRoutePath, NewCragHandler(httpServer.app).AddCrag).Methods("POST")
-	httpServer.router.HandleFunc(UpdateCragRoutePath, NewCragHandler(httpServer.app).UpdateCrag).Methods("PUT")
-	httpServer.router.HandleFunc(DeleteCragIDRoutePath, NewCragHandler(httpServer.app).DeleteCrag).Methods("DELETE")
+	httpServer.router.HandleFunc(cragsHTTPRoutePath, NewCragHandler(httpServer.app).AddCrag).Methods("POST")
+	httpServer.router.HandleFunc(cragsHTTPRoutePath+"/{"+updateCragIDURLParam+"}", NewCragHandler(httpServer.app).UpdateCrag).Methods("PUT")
+	httpServer.router.HandleFunc(cragsHTTPRoutePath+"/{"+deleteCragIDURLParam+"}", NewCragHandler(httpServer.app).DeleteCrag).Methods("DELETE")
 
 }
 
