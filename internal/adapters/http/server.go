@@ -23,6 +23,7 @@ func NewServer(app app.App) *Server {
 	return &Server{app: app}
 }
 
+// AddCragHTTPRoutes registers crag route handlers
 func (httpServer *Server) AddCragHTTPRoutes() {
 	const cragsHTTPRoutePath = "/crags"
 	//Queries
