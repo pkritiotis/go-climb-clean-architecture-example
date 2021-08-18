@@ -1,12 +1,12 @@
 package app
 
 import (
-	"github.com/pkritiotis/go-climb/internal/adapters/notification"
 	"github.com/pkritiotis/go-climb/internal/app/commands"
 	"github.com/pkritiotis/go-climb/internal/app/common"
 	"github.com/pkritiotis/go-climb/internal/app/queries"
 	services2 "github.com/pkritiotis/go-climb/internal/app/services"
 	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/infra/notification"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

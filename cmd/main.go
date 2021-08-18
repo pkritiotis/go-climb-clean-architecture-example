@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/pkritiotis/go-climb/internal/adapters/http"
-	"github.com/pkritiotis/go-climb/internal/adapters/notification"
-	"github.com/pkritiotis/go-climb/internal/adapters/repo"
 	"github.com/pkritiotis/go-climb/internal/app"
+	"github.com/pkritiotis/go-climb/internal/infra/http"
+	"github.com/pkritiotis/go-climb/internal/infra/notification"
+	"github.com/pkritiotis/go-climb/internal/infra/repo"
 )
 
 func main() {
