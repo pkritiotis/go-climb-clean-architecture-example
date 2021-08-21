@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
 //UpdateCragCommand Update Model
@@ -20,11 +20,11 @@ type UpdateCragCommandHandler interface {
 }
 
 type updateCragCommandHandler struct {
-	repo services.CragRepository
+	repo crag.Repository
 }
 
 //NewUpdateCragCommandHandler Constructor
-func NewUpdateCragCommandHandler(repo services.CragRepository) UpdateCragCommandHandler {
+func NewUpdateCragCommandHandler(repo crag.Repository) UpdateCragCommandHandler {
 	return updateCragCommandHandler{repo: repo}
 }
 

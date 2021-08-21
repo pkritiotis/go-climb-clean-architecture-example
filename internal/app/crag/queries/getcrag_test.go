@@ -3,8 +3,7 @@ package queries
 import (
 	"errors"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -12,7 +11,7 @@ import (
 
 func TestGetCragQueryHandler_Handle(t *testing.T) {
 	mockUUID := uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")
-	mockCrag := &domain.Crag{
+	mockCrag := &crag.Crag{
 		ID:        mockUUID,
 		Name:      "test",
 		Desc:      "test",
@@ -28,7 +27,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		CreatedAt: mockCrag.CreatedAt,
 	}
 	type fields struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	type args struct {
 		query GetCragQuery
@@ -43,8 +42,8 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		{
 			name: "happy path - no errors - return crag",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
 					mp.On("GetByID", mockUUID).Return(mockCrag, nil)
 
 					return mp
@@ -61,9 +60,9 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		{
 			name: "no crag - no errors - return nil",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), nil)
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return((*crag.Crag)(nil), nil)
 
 					return mp
 				}(),
@@ -79,9 +78,9 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		{
 			name: "get crag error - return nil",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), errors.New("get error"))
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return((*crag.Crag)(nil), errors.New("get error"))
 
 					return mp
 				}(),
@@ -109,7 +108,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 
 func TestNewGetCragQueryHandler(t *testing.T) {
 	type args struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	tests := []struct {
 		name string
@@ -119,10 +118,10 @@ func TestNewGetCragQueryHandler(t *testing.T) {
 		{
 			name: "construct handler",
 			args: args{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 			want: getCragQueryHandler{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 		},
 	}

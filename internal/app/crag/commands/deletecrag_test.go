@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -14,7 +13,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 	mockUUID := uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")
 
 	type fields struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	type args struct {
 		command DeleteCragCommand
@@ -28,9 +27,9 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "happy path - no errors - should return nil",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return(&domain.Crag{ID: mockUUID}, nil)
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return(&crag.Crag{ID: mockUUID}, nil)
 					mp.On("Delete", mockUUID).Return(nil)
 					return mp
 				}(),
@@ -45,9 +44,9 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "get crag returns error - should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return(&domain.Crag{ID: mockUUID}, errors.New("get error"))
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return(&crag.Crag{ID: mockUUID}, errors.New("get error"))
 					return mp
 				}(),
 			},
@@ -61,9 +60,9 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "get crag returns nil - should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), nil)
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return((*crag.Crag)(nil), nil)
 					return mp
 				}(),
 			},
@@ -77,9 +76,9 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "delete crag returns error - should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return(&domain.Crag{ID: mockUUID}, nil)
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return(&crag.Crag{ID: mockUUID}, nil)
 					mp.On("Delete", mockUUID).Return(errors.New("delete error"))
 					return mp
 				}(),
@@ -105,7 +104,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 
 func TestNewDeleteCragCommandHandler(t *testing.T) {
 	type args struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	tests := []struct {
 		name string
@@ -115,10 +114,10 @@ func TestNewDeleteCragCommandHandler(t *testing.T) {
 		{
 			name: "should return delete command handler",
 			args: args{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 			want: deleteCragCommandHandler{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 		},
 	}

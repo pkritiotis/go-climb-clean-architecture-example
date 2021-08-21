@@ -3,23 +3,22 @@ package repo
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
-//inMemoryRepo Implements the Repository Interface to provide an in-memory storage provider
-type inMemoryRepo struct {
-	crags map[string]domain.Crag
+//inMemory Implements the Repository Interface to provide an in-memory storage provider
+type inMemory struct {
+	crags map[string]crag.Crag
 }
 
 //NewInMemory Constructor
-func NewInMemory() services.CragRepository {
-	crags := make(map[string]domain.Crag)
-	return inMemoryRepo{crags}
+func NewInMemory() crag.Repository {
+	crags := make(map[string]crag.Crag)
+	return inMemory{crags}
 }
 
 //GetCrag Returns the crag with the provided id
-func (m inMemoryRepo) GetByID(id uuid.UUID) (*domain.Crag, error) {
+func (m inMemory) GetByID(id uuid.UUID) (*crag.Crag, error) {
 	crag, ok := m.crags[id.String()]
 	if !ok {
 		return nil, nil
@@ -28,14 +27,14 @@ func (m inMemoryRepo) GetByID(id uuid.UUID) (*domain.Crag, error) {
 }
 
 //GetCrags Returns all stored crags
-func (m inMemoryRepo) GetAll() ([]domain.Crag, error) {
+func (m inMemory) GetAll() ([]crag.Crag, error) {
 	keys := make([]string, 0)
 
 	for key := range m.crags {
 		keys = append(keys, key)
 	}
 
-	var values []domain.Crag
+	var values []crag.Crag
 	for _, value := range m.crags {
 		values = append(values, value)
 	}
@@ -43,19 +42,19 @@ func (m inMemoryRepo) GetAll() ([]domain.Crag, error) {
 }
 
 //AddCrag Adds the provided crag
-func (m inMemoryRepo) Add(crag domain.Crag) error {
+func (m inMemory) Add(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
 //UpdateCrag Updates the provided crag
-func (m inMemoryRepo) Update(crag domain.Crag) error {
+func (m inMemory) Update(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
 //DeleteCrag Deletes the crag with the provided id
-func (m inMemoryRepo) Delete(id uuid.UUID) error {
+func (m inMemory) Delete(id uuid.UUID) error {
 	_, exists := m.crags[id.String()]
 	if !exists {
 		return fmt.Errorf("id %v not found", id.String())

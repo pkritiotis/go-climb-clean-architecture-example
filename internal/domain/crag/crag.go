@@ -1,4 +1,4 @@
-package domain
+package crag
 
 import (
 	"github.com/google/uuid"

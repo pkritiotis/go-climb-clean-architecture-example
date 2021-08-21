@@ -1,11 +1,12 @@
 package app
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app/commands"
-	"github.com/pkritiotis/go-climb/internal/app/common"
-	"github.com/pkritiotis/go-climb/internal/app/queries"
-	services2 "github.com/pkritiotis/go-climb/internal/app/services"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb/internal/app/crag/queries"
+	"github.com/pkritiotis/go-climb/internal/app/notification"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	"github.com/pkritiotis/go-climb/internal/pkg/time"
+	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
 )
 
 //Queries Contains all available query handlers of this app
@@ -28,9 +29,7 @@ type App struct {
 }
 
 // NewApp Bootstraps Application Layer dependencies
-func NewApp(cragRepo services.CragRepository, ns services2.NotificationService) App {
-	up := common.NewUUIDProvider()
-	tp := common.NewTimeProvider()
+func NewApp(cragRepo crag.Repository, ns notification.Service, up uuid.Provider, tp time.Provider) App {
 	return App{
 		Queries: Queries{
 			GetAllCragsHandler: queries.NewGetAllCragsQueryHandler(cragRepo),

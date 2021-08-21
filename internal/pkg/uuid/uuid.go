@@ -1,14 +1,14 @@
-package common
+package uuid
 
 import "github.com/google/uuid"
 
-// UUIDProvider abstracts the uuid generation
-type UUIDProvider interface {
+// Provider abstracts the uuid generation
+type Provider interface {
 	NewUUID() uuid.UUID
 }
 
 // NewUUIDProvider constructor that returns default uuid generation
-func NewUUIDProvider() UUIDProvider {
+func NewUUIDProvider() Provider {
 	return uuidProvider{}
 }
 

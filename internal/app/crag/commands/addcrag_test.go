@@ -3,10 +3,10 @@ package commands
 import (
 	"errors"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/app/common"
-	services2 "github.com/pkritiotis/go-climb/internal/app/services"
-	"github.com/pkritiotis/go-climb/internal/domain"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/app/notification"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	timeUtil "github.com/pkritiotis/go-climb/internal/pkg/time"
+	uuidUtil "github.com/pkritiotis/go-climb/internal/pkg/uuid"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -16,10 +16,10 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 	mockTime, _ := time.Parse("yyyy-MM-02", "2021-07-30")
 	mockUUID := uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")
 	type fields struct {
-		uuidProvider        common.UUIDProvider
-		timeProvider        common.TimeProvider
-		repo                services.CragRepository
-		notificationService services2.NotificationService
+		uuidProvider        uuidUtil.Provider
+		timeProvider        timeUtil.Provider
+		repo                crag.Repository
+		notificationService notification.Service
 	}
 	type args struct {
 		command AddCragCommand
@@ -33,32 +33,32 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "happy path - should not return error",
 			fields: fields{
-				uuidProvider: func() common.MockUUIDProvider {
+				uuidProvider: func() uuidUtil.MockProvider {
 					id := mockUUID
-					mp := common.MockUUIDProvider{}
+					mp := uuidUtil.MockProvider{}
 					mp.On("NewUUID").Return(id)
 					return mp
 				}(),
-				timeProvider: func() common.TimeProvider {
-					mp := common.MockTimeProvider{}
+				timeProvider: func() timeUtil.Provider {
+					mp := timeUtil.MockProvider{}
 					mp.On("Now").Return(mockTime)
 					return mp
 				}(),
-				repo: func() services.MockRepository {
-					acc := domain.Crag{
+				repo: func() crag.MockRepository {
+					acc := crag.Crag{
 						ID:        mockUUID,
 						Name:      "test",
 						Desc:      "test",
 						Country:   "test",
 						CreatedAt: mockTime,
 					}
-					mp := services.MockRepository{}
+					mp := crag.MockRepository{}
 					mp.On("Add", acc).Return(nil)
 					return mp
 				}(),
-				notificationService: func() services2.MockNotificationService {
-					mock := services2.MockNotificationService{}
-					n := services2.Notification{
+				notificationService: func() notification.MockNotificationService {
+					mock := notification.MockNotificationService{}
+					n := notification.Notification{
 						Subject: "New crag added",
 						Message: "A new crag with name 'test' was added in the repository",
 					}
@@ -78,32 +78,32 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "repo error - should return error",
 			fields: fields{
-				uuidProvider: func() common.MockUUIDProvider {
+				uuidProvider: func() uuidUtil.MockProvider {
 					id := mockUUID
-					mp := common.MockUUIDProvider{}
+					mp := uuidUtil.MockProvider{}
 					mp.On("NewUUID").Return(id)
 					return mp
 				}(),
-				timeProvider: func() common.TimeProvider {
-					mp := common.MockTimeProvider{}
+				timeProvider: func() timeUtil.Provider {
+					mp := timeUtil.MockProvider{}
 					mp.On("Now").Return(mockTime)
 					return mp
 				}(),
-				repo: func() services.MockRepository {
-					acc := domain.Crag{
+				repo: func() crag.MockRepository {
+					acc := crag.Crag{
 						ID:        mockUUID,
 						Name:      "test",
 						Desc:      "test",
 						Country:   "test",
 						CreatedAt: mockTime,
 					}
-					mp := services.MockRepository{}
+					mp := crag.MockRepository{}
 					mp.On("Add", acc).Return(errors.New("test"))
 					return mp
 				}(),
-				notificationService: func() services2.MockNotificationService {
-					mock := services2.MockNotificationService{}
-					n := services2.Notification{
+				notificationService: func() notification.MockNotificationService {
+					mock := notification.MockNotificationService{}
+					n := notification.Notification{
 						Subject: "New crag added",
 						Message: "A new crag with name 'test' was added in the repository",
 					}
@@ -124,32 +124,32 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "happy path - should not return error",
 			fields: fields{
-				uuidProvider: func() common.MockUUIDProvider {
+				uuidProvider: func() uuidUtil.MockProvider {
 					id := mockUUID
-					mp := common.MockUUIDProvider{}
+					mp := uuidUtil.MockProvider{}
 					mp.On("NewUUID").Return(id)
 					return mp
 				}(),
-				timeProvider: func() common.TimeProvider {
-					mp := common.MockTimeProvider{}
+				timeProvider: func() timeUtil.Provider {
+					mp := timeUtil.MockProvider{}
 					mp.On("Now").Return(mockTime)
 					return mp
 				}(),
-				repo: func() services.MockRepository {
-					acc := domain.Crag{
+				repo: func() crag.MockRepository {
+					acc := crag.Crag{
 						ID:        mockUUID,
 						Name:      "test",
 						Desc:      "test",
 						Country:   "test",
 						CreatedAt: mockTime,
 					}
-					mp := services.MockRepository{}
+					mp := crag.MockRepository{}
 					mp.On("Add", acc).Return(nil)
 					return mp
 				}(),
-				notificationService: func() services2.MockNotificationService {
-					mock := services2.MockNotificationService{}
-					n := services2.Notification{
+				notificationService: func() notification.MockNotificationService {
+					mock := notification.MockNotificationService{}
+					n := notification.Notification{
 						Subject: "New crag added",
 						Message: "A new crag with name 'test' was added in the repository",
 					}
@@ -185,10 +185,10 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 
 func TestNewAddCragCommandHandler(t *testing.T) {
 	type args struct {
-		uuidProvider        common.UUIDProvider
-		timeProvider        common.TimeProvider
-		repo                services.CragRepository
-		notificationService services2.NotificationService
+		uuidProvider        uuidUtil.Provider
+		timeProvider        timeUtil.Provider
+		repo                crag.Repository
+		notificationService notification.Service
 	}
 	tests := []struct {
 		name string
@@ -198,16 +198,16 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 		{
 			name: "should create a command handler",
 			args: args{
-				uuidProvider:        common.MockUUIDProvider{},
-				timeProvider:        common.MockTimeProvider{},
-				repo:                services.MockRepository{},
-				notificationService: services2.MockNotificationService{},
+				uuidProvider:        uuidUtil.MockProvider{},
+				timeProvider:        timeUtil.MockProvider{},
+				repo:                crag.MockRepository{},
+				notificationService: notification.MockNotificationService{},
 			},
 			want: addCragCommandHandler{
-				uuidProvider:        common.MockUUIDProvider{},
-				timeProvider:        common.MockTimeProvider{},
-				repo:                services.MockRepository{},
-				notificationService: services2.MockNotificationService{},
+				uuidProvider:        uuidUtil.MockProvider{},
+				timeProvider:        timeUtil.MockProvider{},
+				repo:                crag.MockRepository{},
+				notificationService: notification.MockNotificationService{},
 			},
 		},
 	}

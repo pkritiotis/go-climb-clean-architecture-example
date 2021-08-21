@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -13,7 +12,7 @@ import (
 
 func TestNewUpdateCragCommandHandler(t *testing.T) {
 	type args struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	tests := []struct {
 		name string
@@ -23,10 +22,10 @@ func TestNewUpdateCragCommandHandler(t *testing.T) {
 		{
 			name: "should construct handler",
 			args: args{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 			want: updateCragCommandHandler{
-				repo: services.MockRepository{},
+				repo: crag.MockRepository{},
 			},
 		},
 	}
@@ -42,7 +41,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 	mockUUID := uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")
 
 	type fields struct {
-		repo services.CragRepository
+		repo crag.Repository
 	}
 	type args struct {
 		command UpdateCragCommand
@@ -56,16 +55,16 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "happy path - no errors - should return nil",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					returnedCrag := domain.Crag{
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					returnedCrag := crag.Crag{
 						ID:        mockUUID,
 						Name:      "initial",
 						Desc:      "initial",
 						Country:   "initial",
 						CreatedAt: time.Time{},
 					}
-					updatedCrag := domain.Crag{
+					updatedCrag := crag.Crag{
 						ID:        mockUUID,
 						Name:      "updated",
 						Desc:      "updated",
@@ -91,9 +90,9 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "get error should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return(&domain.Crag{ID: mockUUID}, errors.New("get error"))
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return(&crag.Crag{ID: mockUUID}, errors.New("get error"))
 
 					return mp
 				}(),
@@ -111,9 +110,9 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "get returns nil, should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					mp.On("GetByID", mockUUID).Return((*domain.Crag)(nil), nil)
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					mp.On("GetByID", mockUUID).Return((*crag.Crag)(nil), nil)
 					return mp
 				}(),
 			},
@@ -130,16 +129,16 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 		{
 			name: "update error - should return error",
 			fields: fields{
-				repo: func() services.MockRepository {
-					mp := services.MockRepository{}
-					returnedCrag := domain.Crag{
+				repo: func() crag.MockRepository {
+					mp := crag.MockRepository{}
+					returnedCrag := crag.Crag{
 						ID:        mockUUID,
 						Name:      "initial",
 						Desc:      "initial",
 						Country:   "initial",
 						CreatedAt: time.Time{},
 					}
-					updatedCrag := domain.Crag{
+					updatedCrag := crag.Crag{
 						ID:        mockUUID,
 						Name:      "updated",
 						Desc:      "updated",

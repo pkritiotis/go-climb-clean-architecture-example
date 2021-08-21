@@ -1,17 +1,17 @@
-package common
+package uuid
 
 import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
 )
 
-// MockUUIDProvider mocks uuid provider
-type MockUUIDProvider struct {
+// MockProvider mocks uuid provider
+type MockProvider struct {
 	mock.Mock
 }
 
 // NewUUID returns the mocked uuid
-func (m MockUUIDProvider) NewUUID() uuid.UUID {
+func (m MockProvider) NewUUID() uuid.UUID {
 	args := m.Called()
 	return args.Get(0).(uuid.UUID)
 }

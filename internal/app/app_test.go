@@ -1,27 +1,27 @@
 package app
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app/commands"
-	"github.com/pkritiotis/go-climb/internal/app/common"
-	"github.com/pkritiotis/go-climb/internal/app/queries"
-	services2 "github.com/pkritiotis/go-climb/internal/app/services"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
-	"github.com/pkritiotis/go-climb/internal/infra/notification"
+	"github.com/pkritiotis/go-climb/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb/internal/app/crag/queries"
+	"github.com/pkritiotis/go-climb/internal/app/notification"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	"github.com/pkritiotis/go-climb/internal/pkg/time"
+	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestNewApp(t *testing.T) {
-	mockRepo := services.MockRepository{}
-	UUIDProvider := common.NewUUIDProvider()
-	timeProvider := common.NewTimeProvider()
-	notificationService := notification.ConsoleNotificationService{}
+	mockRepo := crag.MockRepository{}
+	UUIDProvider := &uuid.MockProvider{}
+	timeProvider := &time.MockProvider{}
+	notificationService := notification.MockNotificationService{}
 
 	type args struct {
-		up                  common.UUIDProvider
-		tp                  common.TimeProvider
-		cragRepo            services.CragRepository
-		notificationService services2.NotificationService
+		up                  uuid.Provider
+		tp                  time.Provider
+		cragRepo            crag.Repository
+		notificationService notification.Service
 	}
 	tests := []struct {
 		name string
@@ -33,6 +33,8 @@ func TestNewApp(t *testing.T) {
 			args: args{
 				cragRepo:            mockRepo,
 				notificationService: notificationService,
+				up:                  UUIDProvider,
+				tp:                  timeProvider,
 			},
 			want: App{
 				Queries: Queries{
@@ -49,7 +51,7 @@ func TestNewApp(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewApp(tt.args.cragRepo, tt.args.notificationService)
+			got := NewApp(tt.args.cragRepo, tt.args.notificationService, tt.args.up, tt.args.tp)
 			assert.Equal(t, tt.want, got)
 		})
 	}

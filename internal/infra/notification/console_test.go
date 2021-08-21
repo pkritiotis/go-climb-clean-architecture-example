@@ -1,14 +1,14 @@
 package notification
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app/services"
+	"github.com/pkritiotis/go-climb/internal/app/notification"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestConsoleNotificationService_Notify(t *testing.T) {
 	type args struct {
-		notification services.Notification
+		notification notification.Notification
 	}
 	tests := []struct {
 		name    string
@@ -18,7 +18,7 @@ func TestConsoleNotificationService_Notify(t *testing.T) {
 		{
 			name: "Should not return error",
 			args: args{
-				notification: services.Notification{
+				notification: notification.Notification{
 					Subject: "Test Subject",
 					Message: "Test Message",
 				},
@@ -28,7 +28,7 @@ func TestConsoleNotificationService_Notify(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			co := ConsoleNotificationService{}
+			co := ConsoleService{}
 			err := co.Notify(tt.args.notification)
 			assert.Equal(t, tt.wantErr, err != nil)
 		})

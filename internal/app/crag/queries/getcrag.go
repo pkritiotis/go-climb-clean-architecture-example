@@ -2,7 +2,7 @@ package queries
 
 import (
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
 //GetCragQuery Model of the Handler
@@ -16,11 +16,11 @@ type GetCragQueryHandler interface {
 }
 
 type getCragQueryHandler struct {
-	repo services.CragRepository
+	repo crag.Repository
 }
 
 //NewGetCragQueryHandler Handler Constructor
-func NewGetCragQueryHandler(repo services.CragRepository) GetCragQueryHandler {
+func NewGetCragQueryHandler(repo crag.Repository) GetCragQueryHandler {
 	return getCragQueryHandler{repo: repo}
 }
 

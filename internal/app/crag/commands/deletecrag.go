@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
 //DeleteCragCommand Command Model
@@ -17,11 +17,11 @@ type DeleteCragCommandHandler interface {
 }
 
 type deleteCragCommandHandler struct {
-	repo services.CragRepository
+	repo crag.Repository
 }
 
 //NewDeleteCragCommandHandler Handler constructor
-func NewDeleteCragCommandHandler(repo services.CragRepository) DeleteCragCommandHandler {
+func NewDeleteCragCommandHandler(repo crag.Repository) DeleteCragCommandHandler {
 	return deleteCragCommandHandler{repo: repo}
 }
 

@@ -1,7 +1,7 @@
 package queries
 
 import (
-	"github.com/pkritiotis/go-climb/internal/domain/services"
+	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
 //GetAllCragsQueryHandler Contains the dependencies of the Handler
@@ -10,11 +10,11 @@ type GetAllCragsQueryHandler interface {
 }
 
 type getAllCragsQueryHandler struct {
-	repo services.CragRepository
+	repo crag.Repository
 }
 
 //NewGetAllCragsQueryHandler Handler constructor
-func NewGetAllCragsQueryHandler(repo services.CragRepository) GetAllCragsQueryHandler {
+func NewGetAllCragsQueryHandler(repo crag.Repository) GetAllCragsQueryHandler {
 	return getAllCragsQueryHandler{repo: repo}
 }
 

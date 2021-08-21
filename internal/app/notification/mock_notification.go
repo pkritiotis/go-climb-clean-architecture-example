@@ -1,4 +1,4 @@
-package services
+package notification
 
 import "github.com/stretchr/testify/mock"
 

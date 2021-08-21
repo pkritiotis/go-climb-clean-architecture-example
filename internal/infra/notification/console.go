@@ -3,14 +3,19 @@ package notification
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkritiotis/go-climb/internal/app/services"
+	"github.com/pkritiotis/go-climb/internal/app/notification"
 )
 
-// ConsoleNotificationService provides a console implementation of the NotificationService
-type ConsoleNotificationService struct{}
+// ConsoleService provides a console implementation of the Service
+type ConsoleService struct{}
+
+// NewConsoleService constructor for ConsoleService
+func NewConsoleService() *ConsoleService {
+	return &ConsoleService{}
+}
 
 // Notify prints out the notifications in console
-func (ConsoleNotificationService) Notify(notification services.Notification) error {
+func (ConsoleService) Notify(notification notification.Notification) error {
 	jsonNotification, err := json.Marshal(notification)
 	if err != nil {
 		return err
