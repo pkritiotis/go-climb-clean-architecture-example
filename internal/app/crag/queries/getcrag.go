@@ -3,33 +3,43 @@ package queries
 import (
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	"time"
 )
 
-//GetCragQuery Model of the Handler
-type GetCragQuery struct {
+//GetCragRequest Model of the Handler
+type GetCragRequest struct {
 	CragID uuid.UUID
 }
 
-//GetCragQueryHandler provides an interfaces to handle a GetCragQuery and return a *CragQueryResult
-type GetCragQueryHandler interface {
-	Handle(query GetCragQuery) (*CragQueryResult, error)
+// GetCragResult is the return model of Crag Query Handlers
+type GetCragResult struct {
+	ID        uuid.UUID
+	Name      string
+	Desc      string
+	Country   string
+	CreatedAt time.Time
 }
 
-type getCragQueryHandler struct {
+//GetCragRequestHandler provides an interfaces to handle a GetCragRequest and return a *GetCragResult
+type GetCragRequestHandler interface {
+	Handle(query GetCragRequest) (*GetCragResult, error)
+}
+
+type getCragRequestHandler struct {
 	repo crag.Repository
 }
 
-//NewGetCragQueryHandler Handler Constructor
-func NewGetCragQueryHandler(repo crag.Repository) GetCragQueryHandler {
-	return getCragQueryHandler{repo: repo}
+//NewGetCragRequestHandler Handler Constructor
+func NewGetCragRequestHandler(repo crag.Repository) GetCragRequestHandler {
+	return getCragRequestHandler{repo: repo}
 }
 
-//Handle Handlers the GetCragQuery query
-func (h getCragQueryHandler) Handle(query GetCragQuery) (*CragQueryResult, error) {
+//Handle Handlers the GetCragRequest query
+func (h getCragRequestHandler) Handle(query GetCragRequest) (*GetCragResult, error) {
 	crag, err := h.repo.GetByID(query.CragID)
-	var result *CragQueryResult
+	var result *GetCragResult
 	if crag != nil && err == nil {
-		result = &CragQueryResult{ID: crag.ID, Name: crag.Name, Desc: crag.Desc, Country: crag.Country, CreatedAt: crag.CreatedAt}
+		result = &GetCragResult{ID: crag.ID, Name: crag.Name, Desc: crag.Desc, Country: crag.Country, CreatedAt: crag.CreatedAt}
 	}
 	return result, err
 }

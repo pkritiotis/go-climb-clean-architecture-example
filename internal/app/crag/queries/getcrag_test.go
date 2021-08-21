@@ -19,7 +19,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		CreatedAt: time.Time{},
 	}
 
-	cragQueryResult := &CragQueryResult{
+	cragQueryResult := &GetCragResult{
 		ID:        mockUUID,
 		Name:      mockCrag.Name,
 		Desc:      mockCrag.Desc,
@@ -30,13 +30,13 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 		repo crag.Repository
 	}
 	type args struct {
-		query GetCragQuery
+		query GetCragRequest
 	}
 	tests := []struct {
 		name   string
 		fields fields
 		args   args
-		want   *CragQueryResult
+		want   *GetCragResult
 		err    error
 	}{
 		{
@@ -50,7 +50,7 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				query: GetCragQuery{
+				query: GetCragRequest{
 					CragID: mockUUID,
 				},
 			},
@@ -68,11 +68,11 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				query: GetCragQuery{
+				query: GetCragRequest{
 					CragID: mockUUID,
 				},
 			},
-			want: (*CragQueryResult)(nil),
+			want: (*GetCragResult)(nil),
 			err:  nil,
 		},
 		{
@@ -86,17 +86,17 @@ func TestGetCragQueryHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				query: GetCragQuery{
+				query: GetCragRequest{
 					CragID: mockUUID,
 				},
 			},
-			want: (*CragQueryResult)(nil),
+			want: (*GetCragResult)(nil),
 			err:  errors.New("get error"),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := getCragQueryHandler{
+			h := getCragRequestHandler{
 				repo: tt.fields.repo,
 			}
 			got, err := h.Handle(tt.args.query)
@@ -113,21 +113,21 @@ func TestNewGetCragQueryHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want GetCragQueryHandler
+		want GetCragRequestHandler
 	}{
 		{
 			name: "construct handler",
 			args: args{
 				repo: crag.MockRepository{},
 			},
-			want: getCragQueryHandler{
+			want: getCragRequestHandler{
 				repo: crag.MockRepository{},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewGetCragQueryHandler(tt.args.repo)
+			got := NewGetCragRequestHandler(tt.args.repo)
 			assert.Equal(t, tt.want, got)
 		})
 	}

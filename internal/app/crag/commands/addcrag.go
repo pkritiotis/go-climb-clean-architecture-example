@@ -7,32 +7,32 @@ import (
 	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
 )
 
-//AddCragCommand Model of AddCragCommandHandler
-type AddCragCommand struct {
+//AddCragRequest Model of AddCragRequestHandler
+type AddCragRequest struct {
 	Name    string
 	Desc    string
 	Country string
 }
 
-//AddCragCommandHandler Struct that allows handling AddCragCommand
-type AddCragCommandHandler interface {
-	Handle(command AddCragCommand) error
+//AddCragRequestHandler Struct that allows handling AddCragRequest
+type AddCragRequestHandler interface {
+	Handle(command AddCragRequest) error
 }
 
-type addCragCommandHandler struct {
+type addCragRequestHandler struct {
 	uuidProvider        uuid.Provider
 	timeProvider        time.Provider
 	repo                crag.Repository
 	notificationService notification.Service
 }
 
-//NewAddCragCommandHandler Initializes an AddCommandHandler
-func NewAddCragCommandHandler(uuidProvider uuid.Provider, timeProvider time.Provider, repo crag.Repository, notificationService notification.Service) AddCragCommandHandler {
-	return addCragCommandHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo, notificationService: notificationService}
+//NewAddCragRequestHandler Initializes an AddCommandHandler
+func NewAddCragRequestHandler(uuidProvider uuid.Provider, timeProvider time.Provider, repo crag.Repository, notificationService notification.Service) AddCragRequestHandler {
+	return addCragRequestHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo, notificationService: notificationService}
 }
 
-//Handle Handles the AddCragCommand
-func (h addCragCommandHandler) Handle(command AddCragCommand) error {
+//Handle Handles the AddCragRequest
+func (h addCragRequestHandler) Handle(command AddCragRequest) error {
 	crag := crag.Crag{
 		ID:        h.uuidProvider.NewUUID(),
 		Name:      command.Name,

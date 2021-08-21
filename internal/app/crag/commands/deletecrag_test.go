@@ -16,7 +16,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 		repo crag.Repository
 	}
 	type args struct {
-		command DeleteCragCommand
+		command DeleteCragRequest
 	}
 	tests := []struct {
 		name   string
@@ -35,7 +35,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: DeleteCragCommand{
+				command: DeleteCragRequest{
 					CragID: mockUUID,
 				},
 			},
@@ -51,7 +51,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: DeleteCragCommand{
+				command: DeleteCragRequest{
 					CragID: mockUUID,
 				},
 			},
@@ -67,7 +67,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: DeleteCragCommand{
+				command: DeleteCragRequest{
 					CragID: mockUUID,
 				},
 			},
@@ -84,7 +84,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: DeleteCragCommand{
+				command: DeleteCragRequest{
 					CragID: mockUUID,
 				},
 			},
@@ -93,7 +93,7 @@ func TestDeleteCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := deleteCragCommandHandler{
+			h := deleteCragRequestHandler{
 				repo: tt.fields.repo,
 			}
 			err := h.Handle(tt.args.command)
@@ -109,21 +109,21 @@ func TestNewDeleteCragCommandHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want DeleteCragCommandHandler
+		want DeleteCragRequestHandler
 	}{
 		{
 			name: "should return delete command handler",
 			args: args{
 				repo: crag.MockRepository{},
 			},
-			want: deleteCragCommandHandler{
+			want: deleteCragRequestHandler{
 				repo: crag.MockRepository{},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewDeleteCragCommandHandler(tt.args.repo)
+			got := NewDeleteCragRequestHandler(tt.args.repo)
 			assert.Equal(t, tt.want, got)
 		})
 	}

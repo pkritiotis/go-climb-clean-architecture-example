@@ -6,27 +6,27 @@ import (
 	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
-//DeleteCragCommand Command Model
-type DeleteCragCommand struct {
+//DeleteCragRequest Command Model
+type DeleteCragRequest struct {
 	CragID uuid.UUID
 }
 
-//DeleteCragCommandHandler Handler Struct with Dependencies
-type DeleteCragCommandHandler interface {
-	Handle(command DeleteCragCommand) error
+//DeleteCragRequestHandler Handler Struct with Dependencies
+type DeleteCragRequestHandler interface {
+	Handle(command DeleteCragRequest) error
 }
 
-type deleteCragCommandHandler struct {
+type deleteCragRequestHandler struct {
 	repo crag.Repository
 }
 
-//NewDeleteCragCommandHandler Handler constructor
-func NewDeleteCragCommandHandler(repo crag.Repository) DeleteCragCommandHandler {
-	return deleteCragCommandHandler{repo: repo}
+//NewDeleteCragRequestHandler Handler constructor
+func NewDeleteCragRequestHandler(repo crag.Repository) DeleteCragRequestHandler {
+	return deleteCragRequestHandler{repo: repo}
 }
 
-//Handle Handlers the DeleteCragCommand request
-func (h deleteCragCommandHandler) Handle(command DeleteCragCommand) error {
+//Handle Handlers the DeleteCragRequest request
+func (h deleteCragRequestHandler) Handle(command DeleteCragRequest) error {
 	crag, err := h.repo.GetByID(command.CragID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")

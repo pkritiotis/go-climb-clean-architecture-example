@@ -17,17 +17,17 @@ import (
 )
 
 type MockAddCragHandler struct {
-	Handler func(command commands.AddCragCommand) error
+	Handler func(command commands.AddCragRequest) error
 }
 
-func (m MockAddCragHandler) Handle(command commands.AddCragCommand) error {
+func (m MockAddCragHandler) Handle(command commands.AddCragRequest) error {
 	return m.Handler(command)
 }
 
 func TestCragHandler_AddCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            commands.AddCragCommandHandler
+		handler            commands.AddCragRequestHandler
 		reqVars            map[string]interface{}
 		Body               interface{}
 		ResultBodyContains string
@@ -35,7 +35,7 @@ func TestCragHandler_AddCrag(t *testing.T) {
 	}{
 		{
 			name: "should add crag successfully",
-			handler: MockAddCragHandler{Handler: func(command commands.AddCragCommand) error {
+			handler: MockAddCragHandler{Handler: func(command commands.AddCragRequest) error {
 				if command.Country != "country" || command.Desc != "desc" || command.Name != "test" {
 					return errors.New("objects not matching")
 				}
@@ -52,7 +52,7 @@ func TestCragHandler_AddCrag(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockAddCragHandler{Handler: func(command commands.AddCragCommand) error {
+			handler: MockAddCragHandler{Handler: func(command commands.AddCragRequest) error {
 				if command.Country != "country" || command.Desc != "desc" || command.Name != "test" {
 					return errors.New("objects not matching")
 				}
@@ -83,16 +83,16 @@ func TestCragHandler_AddCrag(t *testing.T) {
 }
 
 type MockDeleteCragHandler struct {
-	Handler func(command commands.DeleteCragCommand) error
+	Handler func(command commands.DeleteCragRequest) error
 }
 
-func (m MockDeleteCragHandler) Handle(command commands.DeleteCragCommand) error {
+func (m MockDeleteCragHandler) Handle(command commands.DeleteCragRequest) error {
 	return m.Handler(command)
 }
 func TestCragHandler_DeleteCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            commands.DeleteCragCommandHandler
+		handler            commands.DeleteCragRequestHandler
 		id                 string
 		Body               interface{}
 		ResultBodyContains string
@@ -100,7 +100,7 @@ func TestCragHandler_DeleteCrag(t *testing.T) {
 	}{
 		{
 			name: "should delete crag successfully",
-			handler: MockDeleteCragHandler{Handler: func(command commands.DeleteCragCommand) error {
+			handler: MockDeleteCragHandler{Handler: func(command commands.DeleteCragRequest) error {
 				if command.CragID != uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322") {
 					return errors.New("objects not matching")
 				}
@@ -113,7 +113,7 @@ func TestCragHandler_DeleteCrag(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockDeleteCragHandler{Handler: func(command commands.DeleteCragCommand) error {
+			handler: MockDeleteCragHandler{Handler: func(command commands.DeleteCragRequest) error {
 				if command.CragID != uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322") {
 					return errors.New("objects not matching")
 				}
@@ -143,25 +143,25 @@ func TestCragHandler_DeleteCrag(t *testing.T) {
 }
 
 type MockGetCragsHandler struct {
-	Handler func() ([]queries.CragQueryResult, error)
+	Handler func() ([]queries.GetAllCragsResult, error)
 }
 
-func (m MockGetCragsHandler) Handle() ([]queries.CragQueryResult, error) {
+func (m MockGetCragsHandler) Handle() ([]queries.GetAllCragsResult, error) {
 	return m.Handler()
 }
 
 func TestCragHandler_GetCrags(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            queries.GetAllCragsQueryHandler
+		handler            queries.GetAllCragsRequestHandler
 		Body               interface{}
 		ResultBodyContains string
 		ResultStatus       int
 	}{
 		{
 			name: "should get crags successfully",
-			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
-				return []queries.CragQueryResult{{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}}, nil
+			handler: MockGetCragsHandler{Handler: func() ([]queries.GetAllCragsResult, error) {
+				return []queries.GetAllCragsResult{{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}}, nil
 			}},
 			Body:               "",
 			ResultBodyContains: "3e204a57-4449-4c74-8227-77934cf25322",
@@ -169,7 +169,7 @@ func TestCragHandler_GetCrags(t *testing.T) {
 		},
 		{
 			name: "should return ok with empty body",
-			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
+			handler: MockGetCragsHandler{Handler: func() ([]queries.GetAllCragsResult, error) {
 				return nil, nil
 			}},
 			Body:               "",
@@ -178,7 +178,7 @@ func TestCragHandler_GetCrags(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockGetCragsHandler{Handler: func() ([]queries.CragQueryResult, error) {
+			handler: MockGetCragsHandler{Handler: func() ([]queries.GetAllCragsResult, error) {
 				return nil, errors.New("error")
 			}},
 			Body:               "",
@@ -201,17 +201,17 @@ func TestCragHandler_GetCrags(t *testing.T) {
 }
 
 type MockGetCragHandler struct {
-	Handler func(query queries.GetCragQuery) (*queries.CragQueryResult, error)
+	Handler func(query queries.GetCragRequest) (*queries.GetCragResult, error)
 }
 
-func (m MockGetCragHandler) Handle(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
+func (m MockGetCragHandler) Handle(query queries.GetCragRequest) (*queries.GetCragResult, error) {
 	return m.Handler(query)
 }
 
 func TestCragHandler_GetCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            queries.GetCragQueryHandler
+		handler            queries.GetCragRequestHandler
 		id                 string
 		Body               interface{}
 		ResultBodyContains string
@@ -219,8 +219,8 @@ func TestCragHandler_GetCrag(t *testing.T) {
 	}{
 		{
 			name: "should get crag successfully",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
-				return &queries.CragQueryResult{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}, nil
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
+				return &queries.GetCragResult{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
 			Body:               "",
@@ -229,7 +229,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return not found",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
 				return nil, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
@@ -239,7 +239,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragQuery) (*queries.CragQueryResult, error) {
+			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
 				return nil, errors.New("error")
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
@@ -264,17 +264,17 @@ func TestCragHandler_GetCrag(t *testing.T) {
 }
 
 type MockUpdateCragHandler struct {
-	Handler func(command commands.UpdateCragCommand) error
+	Handler func(command commands.UpdateCragRequest) error
 }
 
-func (m MockUpdateCragHandler) Handle(command commands.UpdateCragCommand) error {
+func (m MockUpdateCragHandler) Handle(command commands.UpdateCragRequest) error {
 	return m.Handler(command)
 }
 
 func TestCragHandler_UpdateCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            commands.UpdateCragCommandHandler
+		handler            commands.UpdateCragRequestHandler
 		id                 string
 		Body               interface{}
 		ResultBodyContains string
@@ -282,7 +282,7 @@ func TestCragHandler_UpdateCrag(t *testing.T) {
 	}{
 		{
 			name: "should update crag successfully",
-			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragCommand) error {
+			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragRequest) error {
 				if command.Country != "country" || command.Desc != "desc" || command.Name != "test" || command.ID != uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322") {
 					return errors.New("objects not matching")
 				}
@@ -301,7 +301,7 @@ func TestCragHandler_UpdateCrag(t *testing.T) {
 		},
 		{
 			name: "inconsistent url - body ids - should return conflict",
-			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragCommand) error {
+			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragRequest) error {
 				if command.Country != "country" || command.Desc != "desc" || command.Name != "test" || command.ID != uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322") {
 					return errors.New("objects not matching")
 				}
@@ -319,7 +319,7 @@ func TestCragHandler_UpdateCrag(t *testing.T) {
 		},
 		{
 			name: "should return internal server error",
-			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragCommand) error {
+			handler: MockUpdateCragHandler{Handler: func(command commands.UpdateCragRequest) error {
 				if command.Country != "country" || command.Desc != "desc" || command.Name != "test" || command.ID != uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322") {
 					return errors.New("objects not matching")
 				}

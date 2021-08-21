@@ -42,7 +42,7 @@ const getCragIDURLParam = "cragId"
 func (c CragHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[getCragIDURLParam]
-	crag, err := c.app.Queries.GetCragHandler.Handle(queries.GetCragQuery{CragID: uuid.MustParse(cragID)})
+	crag, err := c.app.Queries.GetCragHandler.Handle(queries.GetCragRequest{CragID: uuid.MustParse(cragID)})
 	if err == nil && crag == nil {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, "Not Found")
@@ -78,7 +78,7 @@ func (c CragHandler) AddCrag(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, decodeErr.Error())
 		return
 	}
-	err := c.app.Commands.AddCragHandler.Handle(commands.AddCragCommand{
+	err := c.app.Commands.AddCragHandler.Handle(commands.AddCragRequest{
 		Name:    cragToAdd.Name,
 		Desc:    cragToAdd.Desc,
 		Country: cragToAdd.Country,
@@ -119,7 +119,7 @@ func (c CragHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Inconsistency between route id and body id")
 		return
 	}
-	cragToUpdateCommand := commands.UpdateCragCommand{
+	cragToUpdateCommand := commands.UpdateCragRequest{
 		ID:      reqCragToUpdate.ID,
 		Name:    reqCragToUpdate.Name,
 		Desc:    reqCragToUpdate.Desc,
@@ -140,7 +140,7 @@ const deleteCragIDURLParam = "cragId"
 func (c CragHandler) DeleteCrag(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[deleteCragIDURLParam]
-	err := c.app.Commands.DeleteCragHandler.Handle(commands.DeleteCragCommand{CragID: uuid.MustParse(cragID)})
+	err := c.app.Commands.DeleteCragHandler.Handle(commands.DeleteCragRequest{CragID: uuid.MustParse(cragID)})
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, err.Error())

@@ -22,7 +22,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 		notificationService notification.Service
 	}
 	type args struct {
-		command AddCragCommand
+		command AddCragRequest
 	}
 	tests := []struct {
 		name   string
@@ -67,7 +67,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: AddCragCommand{
+				command: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -113,7 +113,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 			},
 
 			args: args{
-				command: AddCragCommand{
+				command: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -158,7 +158,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: AddCragCommand{
+				command: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -169,7 +169,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := addCragCommandHandler{
+			h := addCragRequestHandler{
 				uuidProvider:        tt.fields.uuidProvider,
 				timeProvider:        tt.fields.timeProvider,
 				repo:                tt.fields.repo,
@@ -193,7 +193,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want AddCragCommandHandler
+		want AddCragRequestHandler
 	}{
 		{
 			name: "should create a command handler",
@@ -203,7 +203,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 				repo:                crag.MockRepository{},
 				notificationService: notification.MockNotificationService{},
 			},
-			want: addCragCommandHandler{
+			want: addCragRequestHandler{
 				uuidProvider:        uuidUtil.MockProvider{},
 				timeProvider:        timeUtil.MockProvider{},
 				repo:                crag.MockRepository{},
@@ -213,7 +213,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewAddCragCommandHandler(tt.args.uuidProvider, tt.args.timeProvider, tt.args.repo, tt.args.notificationService)
+			got := NewAddCragRequestHandler(tt.args.uuidProvider, tt.args.timeProvider, tt.args.repo, tt.args.notificationService)
 			assert.Equal(t, got, tt.want)
 		})
 	}

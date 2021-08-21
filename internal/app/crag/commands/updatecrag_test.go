@@ -17,21 +17,21 @@ func TestNewUpdateCragCommandHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want UpdateCragCommandHandler
+		want UpdateCragRequestHandler
 	}{
 		{
 			name: "should construct handler",
 			args: args{
 				repo: crag.MockRepository{},
 			},
-			want: updateCragCommandHandler{
+			want: updateCragRequestHandler{
 				repo: crag.MockRepository{},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewUpdateCragCommandHandler(tt.args.repo)
+			got := NewUpdateCragRequestHandler(tt.args.repo)
 			assert.Equal(t, tt.want, got)
 		})
 	}
@@ -44,7 +44,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 		repo crag.Repository
 	}
 	type args struct {
-		command UpdateCragCommand
+		command UpdateCragRequest
 	}
 	tests := []struct {
 		name   string
@@ -78,7 +78,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: UpdateCragCommand{
+				command: UpdateCragRequest{
 					ID:      mockUUID,
 					Name:    "updated",
 					Desc:    "updated",
@@ -98,7 +98,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: UpdateCragCommand{
+				command: UpdateCragRequest{
 					ID:      mockUUID,
 					Name:    "updated",
 					Desc:    "updated",
@@ -117,7 +117,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: UpdateCragCommand{
+				command: UpdateCragRequest{
 					ID:      mockUUID,
 					Name:    "updated",
 					Desc:    "updated",
@@ -152,7 +152,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: UpdateCragCommand{
+				command: UpdateCragRequest{
 					ID:      mockUUID,
 					Name:    "updated",
 					Desc:    "updated",
@@ -164,7 +164,7 @@ func TestUpdateCragCommandHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := updateCragCommandHandler{
+			h := updateCragRequestHandler{
 				repo: tt.fields.repo,
 			}
 			err := h.Handle(tt.args.command)

@@ -6,30 +6,30 @@ import (
 	"github.com/pkritiotis/go-climb/internal/domain/crag"
 )
 
-//UpdateCragCommand Update Model
-type UpdateCragCommand struct {
+//UpdateCragRequest Update Model
+type UpdateCragRequest struct {
 	ID      uuid.UUID
 	Name    string
 	Desc    string
 	Country string
 }
 
-//UpdateCragCommandHandler Contains the dependencies of the handler
-type UpdateCragCommandHandler interface {
-	Handle(command UpdateCragCommand) error
+//UpdateCragRequestHandler Contains the dependencies of the handler
+type UpdateCragRequestHandler interface {
+	Handle(command UpdateCragRequest) error
 }
 
-type updateCragCommandHandler struct {
+type updateCragRequestHandler struct {
 	repo crag.Repository
 }
 
-//NewUpdateCragCommandHandler Constructor
-func NewUpdateCragCommandHandler(repo crag.Repository) UpdateCragCommandHandler {
-	return updateCragCommandHandler{repo: repo}
+//NewUpdateCragRequestHandler Constructor
+func NewUpdateCragRequestHandler(repo crag.Repository) UpdateCragRequestHandler {
+	return updateCragRequestHandler{repo: repo}
 }
 
 //Handle Handles the update command
-func (h updateCragCommandHandler) Handle(command UpdateCragCommand) error {
+func (h updateCragRequestHandler) Handle(command UpdateCragRequest) error {
 	crag, err := h.repo.GetByID(command.ID)
 	if crag == nil {
 		return fmt.Errorf("the provided crag id does not exist")

@@ -18,7 +18,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 	tests := []struct {
 		name   string
 		fields fields
-		want   []CragQueryResult
+		want   []GetAllCragsResult
 		err    error
 	}{
 		{
@@ -30,7 +30,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []CragQueryResult(nil),
+			want: []GetAllCragsResult(nil),
 			err:  nil,
 		},
 		{
@@ -42,7 +42,7 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []CragQueryResult{{ID: mockUUID}},
+			want: []GetAllCragsResult{{ID: mockUUID}},
 			err:  nil,
 		},
 		{
@@ -54,13 +54,13 @@ func TestGetAllCragsQueryHandler_Handle(t *testing.T) {
 					return mp
 				}(),
 			},
-			want: []CragQueryResult(nil),
+			want: []GetAllCragsResult(nil),
 			err:  errors.New("get crags error"),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := getAllCragsQueryHandler{
+			h := getAllCragsRequestHandler{
 				repo: tt.fields.repo,
 			}
 			got, err := h.Handle()
@@ -77,21 +77,21 @@ func TestNewGetAllCragsQueryHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want GetAllCragsQueryHandler
+		want GetAllCragsRequestHandler
 	}{
 		{
 			name: "should create handler",
 			args: args{
 				repo: crag.MockRepository{},
 			},
-			want: getAllCragsQueryHandler{
+			want: getAllCragsRequestHandler{
 				repo: crag.MockRepository{},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewGetAllCragsQueryHandler(tt.args.repo)
+			got := NewGetAllCragsRequestHandler(tt.args.repo)
 			assert.Equal(t, tt.want, got)
 		})
 	}

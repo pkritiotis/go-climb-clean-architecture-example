@@ -38,13 +38,13 @@ func TestNewApp(t *testing.T) {
 			},
 			want: App{
 				Queries: Queries{
-					GetAllCragsHandler: queries.NewGetAllCragsQueryHandler(mockRepo),
-					GetCragHandler:     queries.NewGetCragQueryHandler(mockRepo),
+					GetAllCragsHandler: queries.NewGetAllCragsRequestHandler(mockRepo),
+					GetCragHandler:     queries.NewGetCragRequestHandler(mockRepo),
 				},
 				Commands: Commands{
-					AddCragHandler:    commands.NewAddCragCommandHandler(UUIDProvider, timeProvider, mockRepo, notificationService),
-					UpdateCragHandler: commands.NewUpdateCragCommandHandler(mockRepo),
-					DeleteCragHandler: commands.NewDeleteCragCommandHandler(mockRepo),
+					AddCragHandler:    commands.NewAddCragRequestHandler(UUIDProvider, timeProvider, mockRepo, notificationService),
+					UpdateCragHandler: commands.NewUpdateCragRequestHandler(mockRepo),
+					DeleteCragHandler: commands.NewDeleteCragRequestHandler(mockRepo),
 				},
 			},
 		},
