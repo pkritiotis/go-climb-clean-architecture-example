@@ -22,7 +22,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 		notificationService notification.Service
 	}
 	type args struct {
-		command AddCragRequest
+		request AddCragRequest
 	}
 	tests := []struct {
 		name   string
@@ -67,7 +67,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: AddCragRequest{
+				request: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -113,7 +113,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 			},
 
 			args: args{
-				command: AddCragRequest{
+				request: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -158,7 +158,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 				}(),
 			},
 			args: args{
-				command: AddCragRequest{
+				request: AddCragRequest{
 					Name:    "test",
 					Desc:    "test",
 					Country: "test",
@@ -176,7 +176,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 				notificationService: tt.fields.notificationService,
 			}
 
-			err := h.Handle(tt.args.command)
+			err := h.Handle(tt.args.request)
 			assert.Equal(t, err, tt.err)
 
 		})
@@ -196,7 +196,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 		want AddCragRequestHandler
 	}{
 		{
-			name: "should create a command handler",
+			name: "should create a request handler",
 			args: args{
 				uuidProvider:        uuidUtil.MockProvider{},
 				timeProvider:        timeUtil.MockProvider{},

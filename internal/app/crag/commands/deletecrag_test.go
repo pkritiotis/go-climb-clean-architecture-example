@@ -112,7 +112,7 @@ func TestNewDeleteCragCommandHandler(t *testing.T) {
 		want DeleteCragRequestHandler
 	}{
 		{
-			name: "should return delete command handler",
+			name: "should return delete request handler",
 			args: args{
 				repo: crag.MockRepository{},
 			},

@@ -32,21 +32,21 @@ func NewAddCragRequestHandler(uuidProvider uuid.Provider, timeProvider time.Prov
 }
 
 //Handle Handles the AddCragRequest
-func (h addCragRequestHandler) Handle(command AddCragRequest) error {
-	crag := crag.Crag{
+func (h addCragRequestHandler) Handle(req AddCragRequest) error {
+	c := crag.Crag{
 		ID:        h.uuidProvider.NewUUID(),
-		Name:      command.Name,
-		Desc:      command.Desc,
-		Country:   command.Country,
+		Name:      req.Name,
+		Desc:      req.Desc,
+		Country:   req.Country,
 		CreatedAt: h.timeProvider.Now(),
 	}
-	err := h.repo.Add(crag)
+	err := h.repo.Add(c)
 	if err != nil {
 		return err
 	}
 	n := notification.Notification{
 		Subject: "New crag added",
-		Message: "A new crag with name '" + crag.Name + "' was added in the repository",
+		Message: "A new crag with name '" + c.Name + "' was added in the repository",
 	}
 	return h.notificationService.Notify(n)
 }

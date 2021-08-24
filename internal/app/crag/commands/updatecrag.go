@@ -28,7 +28,7 @@ func NewUpdateCragRequestHandler(repo crag.Repository) UpdateCragRequestHandler 
 	return updateCragRequestHandler{repo: repo}
 }
 
-//Handle Handles the update command
+//Handle Handles the update request
 func (h updateCragRequestHandler) Handle(command UpdateCragRequest) error {
 	crag, err := h.repo.GetByID(command.ID)
 	if crag == nil {

@@ -17,7 +17,7 @@ func NewInMemory() crag.Repository {
 	return inMemory{crags}
 }
 
-//GetCrag Returns the crag with the provided id
+//GetByID Returns the crag with the provided id
 func (m inMemory) GetByID(id uuid.UUID) (*crag.Crag, error) {
 	crag, ok := m.crags[id.String()]
 	if !ok {
@@ -26,7 +26,7 @@ func (m inMemory) GetByID(id uuid.UUID) (*crag.Crag, error) {
 	return &crag, nil
 }
 
-//GetCrags Returns all stored crags
+//GetAll Returns all stored crags
 func (m inMemory) GetAll() ([]crag.Crag, error) {
 	keys := make([]string, 0)
 
@@ -41,19 +41,19 @@ func (m inMemory) GetAll() ([]crag.Crag, error) {
 	return values, nil
 }
 
-//AddCrag Adds the provided crag
+//Add the provided crag
 func (m inMemory) Add(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
-//UpdateCrag Updates the provided crag
+//Update the provided crag
 func (m inMemory) Update(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
-//DeleteCrag Deletes the crag with the provided id
+//Delete the crag with the provided id
 func (m inMemory) Delete(id uuid.UUID) error {
 	_, exists := m.crags[id.String()]
 	if !exists {
