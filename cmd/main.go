@@ -1,20 +1,18 @@
 package main
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/infra/http"
-	"github.com/pkritiotis/go-climb/internal/infra/notification"
-	"github.com/pkritiotis/go-climb/internal/infra/repo"
-	"github.com/pkritiotis/go-climb/internal/pkg/time"
-	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/inputports"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/interfaceadapters"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/time"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 )
 
 func main() {
-	r := repo.NewInMemory()
-	ns := notification.NewConsoleService()
+	interfaceAdapterServices := interfaceadapters.NewServices()
 	tp := time.NewTimeProvider()
 	up := uuid.NewUUIDProvider()
-	a := app.NewApp(r, ns, up, tp)
-	httpServer := http.NewServer(a)
-	httpServer.ListenAndServe(":8080")
+	appServices := app.NewServices(interfaceAdapterServices.CragRepository, interfaceAdapterServices.NotificationService, up, tp)
+	inputPortsServices := inputports.NewServices(appServices)
+	inputPortsServices.Server.ListenAndServe(":8080")
 }

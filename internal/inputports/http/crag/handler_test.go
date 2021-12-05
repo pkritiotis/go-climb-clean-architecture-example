@@ -1,18 +1,18 @@
-package http
+package crag
 
 import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/pkritiotis/go-climb/internal/app/crag/commands"
-	"github.com/pkritiotis/go-climb/internal/app/crag/queries"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/pkritiotis/go-climb/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,7 +27,7 @@ func (m MockAddCragHandler) Handle(command commands.AddCragRequest) error {
 func TestCragHandler_AddCrag(t *testing.T) {
 	var tests = []struct {
 		name               string
-		handler            commands.AddCragRequestHandler
+		handler            commands.CreateCragRequestHandler
 		reqVars            map[string]interface{}
 		Body               interface{}
 		ResultBodyContains string
@@ -42,7 +42,7 @@ func TestCragHandler_AddCrag(t *testing.T) {
 				return nil
 			}},
 			reqVars: map[string]interface{}{},
-			Body: AddCragRequestModel{
+			Body: CreateCragRequestModel{
 				Name:    "test",
 				Desc:    "desc",
 				Country: "country",
@@ -59,7 +59,7 @@ func TestCragHandler_AddCrag(t *testing.T) {
 				return errors.New("test error")
 			}},
 			reqVars: map[string]interface{}{},
-			Body: AddCragRequestModel{
+			Body: CreateCragRequestModel{
 				Name:    "test",
 				Desc:    "desc",
 				Country: "country",
@@ -70,12 +70,12 @@ func TestCragHandler_AddCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewCragHandler(app.App{Commands: app.Commands{AddCragHandler: tt.handler}})
+			c := NewHandler(app.CragServices{Commands: app.Commands{CreateCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("POST", "", buf)
 			rsp := httptest.NewRecorder()
-			c.AddCrag(rsp, req)
+			c.Create(rsp, req)
 			assert.Contains(t, tt.ResultBodyContains, rsp.Body.String())
 			assert.Equal(t, tt.ResultStatus, rsp.Code)
 		})
@@ -127,7 +127,7 @@ func TestCragHandler_DeleteCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewCragHandler(app.App{Commands: app.Commands{DeleteCragHandler: tt.handler}})
+			c := NewHandler(app.CragServices{Commands: app.Commands{DeleteCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			if tt.Body != nil {
 				_ = json.NewEncoder(buf).Encode(tt.Body)
@@ -135,7 +135,7 @@ func TestCragHandler_DeleteCrag(t *testing.T) {
 			req, _ := http.NewRequest("DELETE", "/crag/"+tt.id, buf)
 			req = mux.SetURLVars(req, map[string]string{"cragId": tt.id})
 			rsp := httptest.NewRecorder()
-			c.DeleteCrag(rsp, req)
+			c.Delete(rsp, req)
 			assert.Contains(t, tt.ResultBodyContains, rsp.Body.String())
 			assert.Equal(t, tt.ResultStatus, rsp.Code)
 		})
@@ -188,12 +188,12 @@ func TestCragHandler_GetCrags(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewCragHandler(app.App{Queries: app.Queries{GetAllCragsHandler: tt.handler}})
+			c := NewHandler(app.CragServices{Queries: app.Queries{GetAllCragsHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("GET", "", buf)
 			rsp := httptest.NewRecorder()
-			c.GetAllCrags(rsp, req)
+			c.GetAll(rsp, req)
 			assert.Contains(t, rsp.Body.String(), tt.ResultBodyContains)
 			assert.Equal(t, tt.ResultStatus, rsp.Code)
 		})
@@ -250,13 +250,13 @@ func TestCragHandler_GetCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewCragHandler(app.App{Queries: app.Queries{GetCragHandler: tt.handler}})
+			c := NewHandler(app.CragServices{Queries: app.Queries{GetCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("PUT", "", buf)
 			req = mux.SetURLVars(req, map[string]string{"cragId": tt.id})
 			rsp := httptest.NewRecorder()
-			c.GetCrag(rsp, req)
+			c.GetByID(rsp, req)
 			assert.Contains(t, rsp.Body.String(), tt.ResultBodyContains)
 			assert.Equal(t, tt.ResultStatus, rsp.Code)
 		})
@@ -338,13 +338,13 @@ func TestCragHandler_UpdateCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := NewCragHandler(app.App{Commands: app.Commands{UpdateCragHandler: tt.handler}})
+			c := NewHandler(app.CragServices{Commands: app.Commands{UpdateCragHandler: tt.handler}})
 			buf := new(bytes.Buffer)
 			_ = json.NewEncoder(buf).Encode(tt.Body)
 			req, _ := http.NewRequest("PUT", "", buf)
 			req = mux.SetURLVars(req, map[string]string{"cragId": tt.id})
 			rsp := httptest.NewRecorder()
-			c.UpdateCrag(rsp, req)
+			c.Update(rsp, req)
 			assert.Contains(t, tt.ResultBodyContains, rsp.Body.String())
 			assert.Equal(t, tt.ResultStatus, rsp.Code)
 		})

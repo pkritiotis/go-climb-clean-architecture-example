@@ -1,29 +1,29 @@
-package http
+package crag
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/app/crag/commands"
-	"github.com/pkritiotis/go-climb/internal/app/crag/queries"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 	"net/http"
 )
 
-//CragHandler Crag http request handler
-type CragHandler struct {
-	app app.App
+//Handler Crag http request handler
+type Handler struct {
+	cragServices app.CragServices
 }
 
-//NewCragHandler Constructor
-func NewCragHandler(app app.App) *CragHandler {
-	return &CragHandler{app: app}
+//NewHandler Constructor
+func NewHandler(app app.CragServices) *Handler {
+	return &Handler{cragServices: app}
 }
 
-//GetAllCrags Returns all available crags
-func (c CragHandler) GetAllCrags(w http.ResponseWriter, _ *http.Request) {
-	crags, err := c.app.Queries.GetAllCragsHandler.Handle()
+//GetAll Returns all available crags
+func (c Handler) GetAll(w http.ResponseWriter, _ *http.Request) {
+	crags, err := c.cragServices.Queries.GetAllCragsHandler.Handle()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
@@ -36,13 +36,14 @@ func (c CragHandler) GetAllCrags(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
-const getCragIDURLParam = "cragId"
+// GetCragIDURLParam contains the parameter identifier to be parsed by the handler
+const GetCragIDURLParam = "cragId"
 
-//GetCrag Returns the crag with the provided id
-func (c CragHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
+//GetByID Returns the crag with the provided id
+func (c Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	cragID := vars[getCragIDURLParam]
-	crag, err := c.app.Queries.GetCragHandler.Handle(queries.GetCragRequest{CragID: uuid.MustParse(cragID)})
+	cragID := vars[GetCragIDURLParam]
+	crag, err := c.cragServices.Queries.GetCragHandler.Handle(queries.GetCragRequest{CragID: uuid.MustParse(cragID)})
 	if err == nil && crag == nil {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, "Not Found")
@@ -62,23 +63,23 @@ func (c CragHandler) GetCrag(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//AddCragRequestModel represents the request model expected for Add request
-type AddCragRequestModel struct {
+//CreateCragRequestModel represents the request model expected for Add request
+type CreateCragRequestModel struct {
 	Name    string `json:"name"`
 	Desc    string `json:"desc"`
 	Country string `json:"country"`
 }
 
-//AddCrag Adds the provides crag
-func (c CragHandler) AddCrag(w http.ResponseWriter, r *http.Request) {
-	var cragToAdd AddCragRequestModel
+//Create Adds the provides crag
+func (c Handler) Create(w http.ResponseWriter, r *http.Request) {
+	var cragToAdd CreateCragRequestModel
 	decodeErr := json.NewDecoder(r.Body).Decode(&cragToAdd)
 	if decodeErr != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, decodeErr.Error())
 		return
 	}
-	err := c.app.Commands.AddCragHandler.Handle(commands.AddCragRequest{
+	err := c.cragServices.Commands.CreateCragHandler.Handle(commands.AddCragRequest{
 		Name:    cragToAdd.Name,
 		Desc:    cragToAdd.Desc,
 		Country: cragToAdd.Country,
@@ -91,7 +92,8 @@ func (c CragHandler) AddCrag(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-const updateCragIDURLParam = "cragId"
+// UpdateCragIDURLParam contains the parameter identifier to be parsed by the handler
+const UpdateCragIDURLParam = "cragId"
 
 //UpdateCragRequestModel represents the  request model of Update
 type UpdateCragRequestModel struct {
@@ -101,10 +103,10 @@ type UpdateCragRequestModel struct {
 	Country string    `json:"country"`
 }
 
-//UpdateCrag Updates path with the provided data
-func (c CragHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
+//Update Updates crag with the provided data
+func (c Handler) Update(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	cragID := uuid.MustParse(vars[updateCragIDURLParam])
+	cragID := uuid.MustParse(vars[UpdateCragIDURLParam])
 
 	var reqCragToUpdate UpdateCragRequestModel
 	decodeErr := json.NewDecoder(r.Body).Decode(&reqCragToUpdate)
@@ -126,7 +128,7 @@ func (c CragHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
 		Country: reqCragToUpdate.Country,
 	}
 
-	err := c.app.Commands.UpdateCragHandler.Handle(cragToUpdateCommand)
+	err := c.cragServices.Commands.UpdateCragHandler.Handle(cragToUpdateCommand)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
@@ -134,13 +136,14 @@ func (c CragHandler) UpdateCrag(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-const deleteCragIDURLParam = "cragId"
+// DeleteCragIDURLParam contains the parameter identifier to be parsed by the handler
+const DeleteCragIDURLParam = "cragId"
 
-//DeleteCrag Deletes the crag with the provided id
-func (c CragHandler) DeleteCrag(w http.ResponseWriter, r *http.Request) {
+//Delete Deletes the crag with the provided id
+func (c Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	cragID := vars[deleteCragIDURLParam]
-	err := c.app.Commands.DeleteCragHandler.Handle(commands.DeleteCragRequest{CragID: uuid.MustParse(cragID)})
+	cragID := vars[DeleteCragIDURLParam]
+	err := c.cragServices.Commands.DeleteCragHandler.Handle(commands.DeleteCragRequest{CragID: uuid.MustParse(cragID)})
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, err.Error())

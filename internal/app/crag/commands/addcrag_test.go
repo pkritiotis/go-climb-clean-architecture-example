@@ -3,10 +3,10 @@ package commands
 import (
 	"errors"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/app/notification"
-	"github.com/pkritiotis/go-climb/internal/domain/crag"
-	timeUtil "github.com/pkritiotis/go-climb/internal/pkg/time"
-	uuidUtil "github.com/pkritiotis/go-climb/internal/pkg/uuid"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
+	timeUtil "github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/time"
+	uuidUtil "github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -76,7 +76,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 			err: nil,
 		},
 		{
-			name: "repo error - should return error",
+			name: "memory error - should return error",
 			fields: fields{
 				uuidProvider: func() uuidUtil.MockProvider {
 					id := mockUUID
@@ -193,7 +193,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want AddCragRequestHandler
+		want CreateCragRequestHandler
 	}{
 		{
 			name: "should create a request handler",
