@@ -1,4 +1,4 @@
-package repo
+package memory
 
 import (
 	"github.com/google/uuid"
@@ -7,21 +7,21 @@ import (
 	"testing"
 )
 
-func TestNewInMemory(t *testing.T) {
+func TestNewRepo(t *testing.T) {
 	tests := []struct {
 		name string
 		want crag.Repository
 	}{
 		{
-			name: "Should create an inmemory repo",
-			want: inMemory{
+			name: "Should create an inmemory memory",
+			want: Repo{
 				crags: make(map[string]crag.Crag),
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewInMemory()
+			got := NewRepo()
 			assert.Equal(t, tt.want, got)
 		})
 	}
@@ -55,7 +55,7 @@ func Test_inMemoryRepo_AddCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			m := inMemory{
+			m := Repo{
 				crags: tt.fields.crags,
 			}
 			err := m.Add(tt.args.crag)
@@ -104,7 +104,7 @@ func Test_inMemoryRepo_DeleteCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			m := inMemory{
+			m := Repo{
 				crags: tt.fields.crags,
 			}
 			err := m.Delete(tt.args.id)
@@ -158,7 +158,7 @@ func Test_inMemoryRepo_GetCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			m := inMemory{
+			m := Repo{
 				crags: tt.fields.crags,
 			}
 			got, err := m.GetByID(tt.args.id)
@@ -205,7 +205,7 @@ func Test_inMemoryRepo_GetCrags(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			m := inMemory{
+			m := Repo{
 				crags: tt.fields.crags,
 			}
 			got, err := m.GetAll()
@@ -257,7 +257,7 @@ func Test_inMemoryRepo_UpdateCrag(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			m := inMemory{
+			m := Repo{
 				crags: tt.fields.crags,
 			}
 			err := m.Update(tt.args.crag)

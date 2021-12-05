@@ -26,7 +26,7 @@ func TestNewApp(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want App
+		want CragServices
 	}{
 		{
 			name: "should initialize application layer",
@@ -36,13 +36,13 @@ func TestNewApp(t *testing.T) {
 				up:                  UUIDProvider,
 				tp:                  timeProvider,
 			},
-			want: App{
+			want: CragServices{
 				Queries: Queries{
 					GetAllCragsHandler: queries.NewGetAllCragsRequestHandler(mockRepo),
 					GetCragHandler:     queries.NewGetCragRequestHandler(mockRepo),
 				},
 				Commands: Commands{
-					AddCragHandler:    commands.NewAddCragRequestHandler(UUIDProvider, timeProvider, mockRepo, notificationService),
+					CreateCragHandler: commands.NewAddCragRequestHandler(UUIDProvider, timeProvider, mockRepo, notificationService),
 					UpdateCragHandler: commands.NewUpdateCragRequestHandler(mockRepo),
 					DeleteCragHandler: commands.NewDeleteCragRequestHandler(mockRepo),
 				},
@@ -51,8 +51,8 @@ func TestNewApp(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewApp(tt.args.cragRepo, tt.args.notificationService, tt.args.up, tt.args.tp)
-			assert.Equal(t, tt.want, got)
+			got := NewServices(tt.args.cragRepo, tt.args.notificationService, tt.args.up, tt.args.tp)
+			assert.Equal(t, tt.want, got.CragServices)
 		})
 	}
 }

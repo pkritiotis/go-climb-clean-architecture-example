@@ -76,7 +76,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 			err: nil,
 		},
 		{
-			name: "repo error - should return error",
+			name: "memory error - should return error",
 			fields: fields{
 				uuidProvider: func() uuidUtil.MockProvider {
 					id := mockUUID
@@ -193,7 +193,7 @@ func TestNewAddCragCommandHandler(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want AddCragRequestHandler
+		want CreateCragRequestHandler
 	}{
 		{
 			name: "should create a request handler",

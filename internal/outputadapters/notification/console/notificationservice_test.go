@@ -1,4 +1,4 @@
-package notification
+package console
 
 import (
 	"github.com/pkritiotis/go-climb/internal/app/notification"
@@ -28,7 +28,7 @@ func TestConsoleNotificationService_Notify(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			co := ConsoleService{}
+			co := NotificationService{}
 			err := co.Notify(tt.args.notification)
 			assert.Equal(t, tt.wantErr, err != nil)
 		})

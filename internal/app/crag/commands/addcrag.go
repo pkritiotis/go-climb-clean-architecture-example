@@ -7,15 +7,15 @@ import (
 	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
 )
 
-//AddCragRequest Model of AddCragRequestHandler
+//AddCragRequest Model of CreateCragRequestHandler
 type AddCragRequest struct {
 	Name    string
 	Desc    string
 	Country string
 }
 
-//AddCragRequestHandler Struct that allows handling AddCragRequest
-type AddCragRequestHandler interface {
+//CreateCragRequestHandler Struct that allows handling AddCragRequest
+type CreateCragRequestHandler interface {
 	Handle(command AddCragRequest) error
 }
 
@@ -27,7 +27,7 @@ type addCragRequestHandler struct {
 }
 
 //NewAddCragRequestHandler Initializes an AddCommandHandler
-func NewAddCragRequestHandler(uuidProvider uuid.Provider, timeProvider time.Provider, repo crag.Repository, notificationService notification.Service) AddCragRequestHandler {
+func NewAddCragRequestHandler(uuidProvider uuid.Provider, timeProvider time.Provider, repo crag.Repository, notificationService notification.Service) CreateCragRequestHandler {
 	return addCragRequestHandler{uuidProvider: uuidProvider, timeProvider: timeProvider, repo: repo, notificationService: notificationService}
 }
 
