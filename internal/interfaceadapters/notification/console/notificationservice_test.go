@@ -1,7 +1,7 @@
 package console
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app/notification"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

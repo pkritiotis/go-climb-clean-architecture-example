@@ -1,4 +1,4 @@
-module github.com/pkritiotis/go-climb
+module github.com/pkritiotis/go-climb-clean-architecture-example
 
 go 1.16
 

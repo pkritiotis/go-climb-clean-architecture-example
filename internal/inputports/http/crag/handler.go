@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/app/crag/commands"
-	"github.com/pkritiotis/go-climb/internal/app/crag/queries"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 	"net/http"
 )
 

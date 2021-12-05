@@ -1,10 +1,10 @@
 package interfaceadapters
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app/notification"
-	"github.com/pkritiotis/go-climb/internal/domain/crag"
-	"github.com/pkritiotis/go-climb/internal/interfaceadapters/notification/console"
-	"github.com/pkritiotis/go-climb/internal/interfaceadapters/storage/memory"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/interfaceadapters/notification/console"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/interfaceadapters/storage/memory"
 )
 
 type Services struct {

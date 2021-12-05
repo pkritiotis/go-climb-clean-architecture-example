@@ -1,8 +1,8 @@
 package inputports
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/inputports/http"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/inputports/http"
 )
 
 type Services struct {

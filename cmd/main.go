@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/inputports"
-	"github.com/pkritiotis/go-climb/internal/interfaceadapters"
-	"github.com/pkritiotis/go-climb/internal/pkg/time"
-	"github.com/pkritiotis/go-climb/internal/pkg/uuid"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/inputports"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/interfaceadapters"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/time"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 )
 
 func main() {

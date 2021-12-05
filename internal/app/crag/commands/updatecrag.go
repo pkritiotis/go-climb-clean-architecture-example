@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 )
 
 //UpdateCragRequest Update Model

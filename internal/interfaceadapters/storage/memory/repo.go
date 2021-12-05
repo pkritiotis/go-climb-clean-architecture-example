@@ -3,7 +3,7 @@ package memory
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/pkritiotis/go-climb/internal/domain/crag"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 )
 
 //Repo Implements the Repository Interface to provide an in-memory storage provider

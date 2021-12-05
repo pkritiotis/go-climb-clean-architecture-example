@@ -2,8 +2,8 @@ package http
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/pkritiotis/go-climb/internal/app"
-	"github.com/pkritiotis/go-climb/internal/inputports/http/crag"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/inputports/http/crag"
 	"log"
 	"net/http"
 )
