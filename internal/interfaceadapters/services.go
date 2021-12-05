@@ -1,10 +1,10 @@
-package outputadapters
+package interfaceadapters
 
 import (
 	"github.com/pkritiotis/go-climb/internal/app/notification"
 	"github.com/pkritiotis/go-climb/internal/domain/crag"
-	"github.com/pkritiotis/go-climb/internal/outputadapters/notification/console"
-	"github.com/pkritiotis/go-climb/internal/outputadapters/storage/memory"
+	"github.com/pkritiotis/go-climb/internal/interfaceadapters/notification/console"
+	"github.com/pkritiotis/go-climb/internal/interfaceadapters/storage/memory"
 )
 
 type Services struct {
