@@ -36,6 +36,7 @@ func (c Handler) GetAll(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
+// GetCragIDURLParam contains the parameter identifier to be parsed by the handler
 const GetCragIDURLParam = "cragId"
 
 //GetByID Returns the crag with the provided id
@@ -91,6 +92,7 @@ func (c Handler) Create(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// UpdateCragIDURLParam contains the parameter identifier to be parsed by the handler
 const UpdateCragIDURLParam = "cragId"
 
 //UpdateCragRequestModel represents the  request model of Update
@@ -134,6 +136,7 @@ func (c Handler) Update(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// DeleteCragIDURLParam contains the parameter identifier to be parsed by the handler
 const DeleteCragIDURLParam = "cragId"
 
 //Delete Deletes the crag with the provided id
