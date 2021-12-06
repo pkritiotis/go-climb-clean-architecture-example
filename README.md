@@ -81,7 +81,7 @@ Go Climb follows the group-by-layer structure:
   Each of these directories contains its corresponding components, following the group-by-feature approach.
 - `vendor` contains the dependencies of our project
 
-Great, we know how the high-level project structure of Go Climb. Let's explore the contents of each layer.
+Great, we know how the high-level project structure of Go Climb.
 
 
 # Developer's Handbook
