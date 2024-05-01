@@ -1,3 +1,4 @@
+// Package queries contains the GetAllCragsRequest Query and its handler
 package queries
 
 import (

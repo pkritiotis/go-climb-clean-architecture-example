@@ -1,3 +1,4 @@
+// Package uuid contains the mock implementation of the uuid provider.
 package uuid
 
 import (

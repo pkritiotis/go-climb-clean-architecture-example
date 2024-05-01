@@ -1,3 +1,4 @@
+// Package commands contains the command handlers of the crag package.
 package commands
 
 import (

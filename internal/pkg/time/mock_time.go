@@ -1,3 +1,4 @@
+// Package time contains the mock implementation of the time package.
 package time
 
 import (

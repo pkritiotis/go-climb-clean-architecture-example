@@ -1,3 +1,4 @@
+// Package interfaceadapters contains the services of the interface adapters
 package interfaceadapters
 
 import (

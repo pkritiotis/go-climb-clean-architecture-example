@@ -1,3 +1,4 @@
+// Package crag contains the Crag model.
 package crag
 
 import (

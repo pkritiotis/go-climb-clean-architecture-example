@@ -1,3 +1,4 @@
+// Package inputports contains the services of the input ports
 package inputports
 
 import (

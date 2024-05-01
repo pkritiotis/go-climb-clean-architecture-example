@@ -1,3 +1,4 @@
+// Package notification contains the mock implementation of the NotificationService interface.
 package notification
 
 import "github.com/stretchr/testify/mock"

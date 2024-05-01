@@ -221,7 +221,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 	}{
 		{
 			name: "should get crag successfully",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
+			handler: MockGetCragHandler{Handler: func(_ queries.GetCragRequest) (*queries.GetCragResult, error) {
 				return &queries.GetCragResult{ID: uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322")}, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
@@ -231,7 +231,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return not found",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
+			handler: MockGetCragHandler{Handler: func(_ queries.GetCragRequest) (*queries.GetCragResult, error) {
 				return nil, nil
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",
@@ -241,7 +241,7 @@ func TestCragHandler_GetCrag(t *testing.T) {
 		},
 		{
 			name: "should return error",
-			handler: MockGetCragHandler{Handler: func(query queries.GetCragRequest) (*queries.GetCragResult, error) {
+			handler: MockGetCragHandler{Handler: func(_ queries.GetCragRequest) (*queries.GetCragResult, error) {
 				return nil, errors.New("error")
 			}},
 			id:                 "3e204a57-4449-4c74-8227-77934cf25322",

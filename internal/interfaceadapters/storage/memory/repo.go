@@ -1,3 +1,4 @@
+// Package memory implements the Repository Interface to provide an in-memory storage provider
 package memory
 
 import (

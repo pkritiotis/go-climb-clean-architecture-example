@@ -1,3 +1,4 @@
+// Package app contains the application layer of the application. It is the layer that contains the business logic of the application. It is the layer that interacts with the domain layer and the interface adapters. It is the layer that contains the use cases of the application
 package app
 
 import (

@@ -1,3 +1,4 @@
+// Package crag contains the crag handler of the domain
 package crag
 
 import (

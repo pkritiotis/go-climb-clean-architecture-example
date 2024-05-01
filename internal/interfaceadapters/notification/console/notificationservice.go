@@ -1,3 +1,4 @@
+// Package console contains the console implementation of the notification service
 package console
 
 import (

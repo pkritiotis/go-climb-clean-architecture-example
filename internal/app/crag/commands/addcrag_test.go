@@ -179,6 +179,7 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 
 			err := h.Handle(tt.args.request)
 			assert.Equal(t, err, tt.err)
+
 		})
 	}
 }
