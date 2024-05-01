@@ -2,11 +2,12 @@ package commands
 
 import (
 	"fmt"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 )
 
-//UpdateCragRequest Update Model
+// UpdateCragRequest Update Model
 type UpdateCragRequest struct {
 	ID      uuid.UUID
 	Name    string
@@ -14,7 +15,7 @@ type UpdateCragRequest struct {
 	Country string
 }
 
-//UpdateCragRequestHandler Contains the dependencies of the handler
+// UpdateCragRequestHandler Contains the dependencies of the handler
 type UpdateCragRequestHandler interface {
 	Handle(command UpdateCragRequest) error
 }
@@ -23,12 +24,12 @@ type updateCragRequestHandler struct {
 	repo crag.Repository
 }
 
-//NewUpdateCragRequestHandler Constructor
+// NewUpdateCragRequestHandler Constructor
 func NewUpdateCragRequestHandler(repo crag.Repository) UpdateCragRequestHandler {
 	return updateCragRequestHandler{repo: repo}
 }
 
-//Handle Handles the update request
+// Handle Handles the update request
 func (h updateCragRequestHandler) Handle(command UpdateCragRequest) error {
 	crag, err := h.repo.GetByID(command.ID)
 	if crag == nil {
@@ -43,5 +44,4 @@ func (h updateCragRequestHandler) Handle(command UpdateCragRequest) error {
 	crag.Country = command.Country
 
 	return h.repo.Update(*crag)
-
 }

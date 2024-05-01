@@ -3,25 +3,26 @@ package crag
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
-	"net/http"
 )
 
-//Handler Crag http request handler
+// Handler Crag http request handler
 type Handler struct {
 	cragServices app.CragServices
 }
 
-//NewHandler Constructor
+// NewHandler Constructor
 func NewHandler(app app.CragServices) *Handler {
 	return &Handler{cragServices: app}
 }
 
-//GetAll Returns all available crags
+// GetAll Returns all available crags
 func (c Handler) GetAll(w http.ResponseWriter, _ *http.Request) {
 	crags, err := c.cragServices.Queries.GetAllCragsHandler.Handle()
 	if err != nil {
@@ -39,7 +40,7 @@ func (c Handler) GetAll(w http.ResponseWriter, _ *http.Request) {
 // GetCragIDURLParam contains the parameter identifier to be parsed by the handler
 const GetCragIDURLParam = "cragId"
 
-//GetByID Returns the crag with the provided id
+// GetByID Returns the crag with the provided id
 func (c Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[GetCragIDURLParam]
@@ -63,14 +64,14 @@ func (c Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//CreateCragRequestModel represents the request model expected for Add request
+// CreateCragRequestModel represents the request model expected for Add request
 type CreateCragRequestModel struct {
 	Name    string `json:"name"`
 	Desc    string `json:"desc"`
 	Country string `json:"country"`
 }
 
-//Create Adds the provides crag
+// Create Adds the provides crag
 func (c Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var cragToAdd CreateCragRequestModel
 	decodeErr := json.NewDecoder(r.Body).Decode(&cragToAdd)
@@ -95,7 +96,7 @@ func (c Handler) Create(w http.ResponseWriter, r *http.Request) {
 // UpdateCragIDURLParam contains the parameter identifier to be parsed by the handler
 const UpdateCragIDURLParam = "cragId"
 
-//UpdateCragRequestModel represents the  request model of Update
+// UpdateCragRequestModel represents the  request model of Update
 type UpdateCragRequestModel struct {
 	ID      uuid.UUID `json:"id"`
 	Name    string    `json:"name"`
@@ -103,7 +104,7 @@ type UpdateCragRequestModel struct {
 	Country string    `json:"country"`
 }
 
-//Update Updates crag with the provided data
+// Update Updates crag with the provided data
 func (c Handler) Update(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := uuid.MustParse(vars[UpdateCragIDURLParam])
@@ -139,7 +140,7 @@ func (c Handler) Update(w http.ResponseWriter, r *http.Request) {
 // DeleteCragIDURLParam contains the parameter identifier to be parsed by the handler
 const DeleteCragIDURLParam = "cragId"
 
-//Delete Deletes the crag with the provided id
+// Delete Deletes the crag with the provided id
 func (c Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cragID := vars[DeleteCragIDURLParam]

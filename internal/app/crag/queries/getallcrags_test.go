@@ -2,8 +2,9 @@ package queries
 
 import (
 	"errors"
-	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 	"testing"
+
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"

@@ -1,9 +1,10 @@
 package queries
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
-	"time"
 )
 
 // GetAllCragsResult is the result of the GetAllCragsRequest Query
@@ -15,7 +16,7 @@ type GetAllCragsResult struct {
 	CreatedAt time.Time
 }
 
-//GetAllCragsRequestHandler Contains the dependencies of the Handler
+// GetAllCragsRequestHandler Contains the dependencies of the Handler
 type GetAllCragsRequestHandler interface {
 	Handle() ([]GetAllCragsResult, error)
 }
@@ -24,14 +25,13 @@ type getAllCragsRequestHandler struct {
 	repo crag.Repository
 }
 
-//NewGetAllCragsRequestHandler Handler constructor
+// NewGetAllCragsRequestHandler Handler constructor
 func NewGetAllCragsRequestHandler(repo crag.Repository) GetAllCragsRequestHandler {
 	return getAllCragsRequestHandler{repo: repo}
 }
 
-//Handle Handles the query
+// Handle Handles the query
 func (h getAllCragsRequestHandler) Handle() ([]GetAllCragsResult, error) {
-
 	res, err := h.repo.GetAll()
 	if err != nil {
 		return nil, err

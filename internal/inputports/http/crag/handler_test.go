@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
-	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
@@ -25,7 +26,7 @@ func (m MockAddCragHandler) Handle(command commands.AddCragRequest) error {
 }
 
 func TestCragHandler_AddCrag(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name               string
 		handler            commands.CreateCragRequestHandler
 		reqVars            map[string]interface{}
@@ -89,8 +90,9 @@ type MockDeleteCragHandler struct {
 func (m MockDeleteCragHandler) Handle(command commands.DeleteCragRequest) error {
 	return m.Handler(command)
 }
+
 func TestCragHandler_DeleteCrag(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name               string
 		handler            commands.DeleteCragRequestHandler
 		id                 string
@@ -151,7 +153,7 @@ func (m MockGetCragsHandler) Handle() ([]queries.GetAllCragsResult, error) {
 }
 
 func TestCragHandler_GetCrags(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name               string
 		handler            queries.GetAllCragsRequestHandler
 		Body               interface{}
@@ -209,7 +211,7 @@ func (m MockGetCragHandler) Handle(query queries.GetCragRequest) (*queries.GetCr
 }
 
 func TestCragHandler_GetCrag(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name               string
 		handler            queries.GetCragRequestHandler
 		id                 string
@@ -272,7 +274,7 @@ func (m MockUpdateCragHandler) Handle(command commands.UpdateCragRequest) error 
 }
 
 func TestCragHandler_UpdateCrag(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name               string
 		handler            commands.UpdateCragRequestHandler
 		id                 string
@@ -290,7 +292,6 @@ func TestCragHandler_UpdateCrag(t *testing.T) {
 			}},
 			id: "3e204a57-4449-4c74-8227-77934cf25322",
 			Body: UpdateCragRequestModel{
-
 				ID:      uuid.MustParse("3e204a57-4449-4c74-8227-77934cf25322"),
 				Name:    "test",
 				Desc:    "desc",

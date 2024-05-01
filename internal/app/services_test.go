@@ -1,6 +1,8 @@
 package app
 
 import (
+	"testing"
+
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/commands"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/crag/queries"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
@@ -8,7 +10,6 @@ import (
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/time"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestNewApp(t *testing.T) {

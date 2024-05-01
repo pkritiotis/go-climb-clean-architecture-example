@@ -2,14 +2,15 @@ package commands
 
 import (
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 	timeUtil "github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/time"
 	uuidUtil "github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestAddCragCommandHandler_Handle(t *testing.T) {
@@ -178,7 +179,6 @@ func TestAddCragCommandHandler_Handle(t *testing.T) {
 
 			err := h.Handle(tt.args.request)
 			assert.Equal(t, err, tt.err)
-
 		})
 	}
 }

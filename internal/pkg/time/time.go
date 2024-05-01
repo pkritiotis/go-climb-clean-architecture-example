@@ -9,8 +9,7 @@ type Provider interface {
 	Now() time.Time
 }
 
-type timeProvider struct {
-}
+type timeProvider struct{}
 
 // NewTimeProvider Provider constructor that returns the default time provider
 func NewTimeProvider() Provider {

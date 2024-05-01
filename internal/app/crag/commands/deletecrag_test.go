@@ -3,10 +3,11 @@ package commands
 import (
 	"errors"
 	"fmt"
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestDeleteCragCommandHandler_Handle(t *testing.T) {

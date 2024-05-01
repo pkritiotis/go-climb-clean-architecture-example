@@ -1,9 +1,10 @@
 package console
 
 import (
+	"testing"
+
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestConsoleNotificationService_Notify(t *testing.T) {

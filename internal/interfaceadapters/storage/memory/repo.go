@@ -2,22 +2,23 @@ package memory
 
 import (
 	"fmt"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 )
 
-//Repo Implements the Repository Interface to provide an in-memory storage provider
+// Repo Implements the Repository Interface to provide an in-memory storage provider
 type Repo struct {
 	crags map[string]crag.Crag
 }
 
-//NewRepo Constructor
+// NewRepo Constructor
 func NewRepo() Repo {
 	crags := make(map[string]crag.Crag)
 	return Repo{crags}
 }
 
-//GetByID Returns the crag with the provided id
+// GetByID Returns the crag with the provided id
 func (m Repo) GetByID(id uuid.UUID) (*crag.Crag, error) {
 	crag, ok := m.crags[id.String()]
 	if !ok {
@@ -26,7 +27,7 @@ func (m Repo) GetByID(id uuid.UUID) (*crag.Crag, error) {
 	return &crag, nil
 }
 
-//GetAll Returns all stored crags
+// GetAll Returns all stored crags
 func (m Repo) GetAll() ([]crag.Crag, error) {
 	keys := make([]string, 0)
 
@@ -41,19 +42,19 @@ func (m Repo) GetAll() ([]crag.Crag, error) {
 	return values, nil
 }
 
-//Add the provided crag
+// Add the provided crag
 func (m Repo) Add(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
-//Update the provided crag
+// Update the provided crag
 func (m Repo) Update(crag crag.Crag) error {
 	m.crags[crag.ID.String()] = crag
 	return nil
 }
 
-//Delete the crag with the provided id
+// Delete the crag with the provided id
 func (m Repo) Delete(id uuid.UUID) error {
 	_, exists := m.crags[id.String()]
 	if !exists {

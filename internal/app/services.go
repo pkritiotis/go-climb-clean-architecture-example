@@ -9,26 +9,26 @@ import (
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/pkg/uuid"
 )
 
-//Queries Contains all available query handlers of this app
+// Queries Contains all available query handlers of this app
 type Queries struct {
 	GetAllCragsHandler queries.GetAllCragsRequestHandler
 	GetCragHandler     queries.GetCragRequestHandler
 }
 
-//Commands Contains all available command handlers of this app
+// Commands Contains all available command handlers of this app
 type Commands struct {
 	CreateCragHandler commands.CreateCragRequestHandler
 	UpdateCragHandler commands.UpdateCragRequestHandler
 	DeleteCragHandler commands.DeleteCragRequestHandler
 }
 
-//CragServices Contains the grouped queries and commands of the app layer
+// CragServices Contains the grouped queries and commands of the app layer
 type CragServices struct {
 	Queries  Queries
 	Commands Commands
 }
 
-//Services contains all exposed services of the application layer
+// Services contains all exposed services of the application layer
 type Services struct {
 	CragServices CragServices
 }
@@ -46,5 +46,6 @@ func NewServices(cragRepo crag.Repository, ns notification.Service, up uuid.Prov
 				UpdateCragHandler: commands.NewUpdateCragRequestHandler(cragRepo),
 				DeleteCragHandler: commands.NewDeleteCragRequestHandler(cragRepo),
 			},
-		}}
+		},
+	}
 }

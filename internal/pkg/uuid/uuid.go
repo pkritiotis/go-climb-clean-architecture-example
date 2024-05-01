@@ -12,8 +12,7 @@ func NewUUIDProvider() Provider {
 	return uuidProvider{}
 }
 
-type uuidProvider struct {
-}
+type uuidProvider struct{}
 
 // NewUUID generates a new UUID
 func (u uuidProvider) NewUUID() uuid.UUID {

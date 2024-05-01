@@ -1,10 +1,11 @@
 package memory
 
 import (
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/domain/crag"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestNewRepo(t *testing.T) {

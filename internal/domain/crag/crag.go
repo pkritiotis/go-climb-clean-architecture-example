@@ -1,11 +1,12 @@
 package crag
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
-//Crag Model that represents the Crag
+// Crag Model that represents the Crag
 type Crag struct {
 	ID        uuid.UUID
 	Name      string

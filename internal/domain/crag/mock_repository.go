@@ -5,7 +5,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-//MockRepository mocks Repository for testing purposes
+// MockRepository mocks Repository for testing purposes
 type MockRepository struct {
 	mock.Mock
 }

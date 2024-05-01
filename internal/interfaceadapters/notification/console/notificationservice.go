@@ -3,6 +3,7 @@ package console
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app/notification"
 )
 
