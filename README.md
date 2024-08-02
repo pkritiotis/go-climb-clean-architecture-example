@@ -51,12 +51,10 @@ Go Climb follows the group-by-layer structure:
 │   │       ├── crag.go
 │   │       ├── mock_repository.go
 │   │       └── repository.go
-│   ├── inputports
+│   ├── infra
 │   │   ├── http
 │   │   │   ├── crag
 │   │   │   └── server.go
-│   │   └── sevices.go
-│   ├── outputadapters
 │   │   ├── notification
 │   │   │   └── console
 │   │   ├── services.go
@@ -72,8 +70,6 @@ Go Climb follows the group-by-layer structure:
 - `docs` contains documentation about the application
 - `internal` contains the main implementation of our application. It consists of the three layers of clean architecture + shared utility code under `pkg/`
     - infra
-        - outputadapters
-        - inputports
     - app
     - domain
     - pkg

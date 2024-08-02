@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/app"
-	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/inputports/http/crag"
+	"github.com/pkritiotis/go-climb-clean-architecture-example/internal/infra/http/crag"
 )
 
 // Server Represents the http server running for this service
